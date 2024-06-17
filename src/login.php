@@ -1,13 +1,21 @@
 
 <?php
-//$_get
-;
+
+$mail="philipe@gmail.com";
+$mdp="123456";
+
+if ($mail=="philipe@gmail.com" && $mdp=="123456"){
+
+}
 ?>
 <head>
     <link rel="stylesheet" type="text/css" href="login.css" />
     <link rel="stylesheet" type="text/css" href="./output.css" />
 </head>
-<img
+<div>
+
+</div>
+<img src="../src/assets/LOGOPHARMASYS.png">
 <h3>PharmaSys, gestion de stock simplifié et efficace !</h3>
 <div class="container" id="container">
     <div class="form-container sign-up-container">
@@ -40,8 +48,8 @@
             </div>
             <div class="overlay-panel overlay-right">
                 <form class="formtrans"method="post" action="signUp.php">
-                    <h1>Hello, Friend!</h1>
-                    <p>Enter your personal details and start journey with us</p>
+                    <h1>Bonjour!</h1>
+                    <p>Si vous n'avez pas de compte, venez le crée ici! </p>
                     <button class="ghost" id="signUp" type="submit"> Sign Up</button>
                 </form>
 
@@ -50,11 +58,11 @@
     </div>
 </div>
 
-<footer>
-    <p>
-        Created with <i class="fa fa-heart"></i> by
-        <a target="_blank" href="https://florin-pop.com">Florin Pop</a>
-        - Read how I created this and how you can join the challenge
-        <a target="_blank" href="https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/">here</a>.
-    </p>
-</footer>
+<!--<footer>-->
+<!--    <p>-->
+<!--        Created with <i class="fa fa-heart"></i> by-->
+<!--        <a target="_blank" href="https://florin-pop.com">Florin Pop</a>-->
+<!--        - Read how I created this and how you can join the challenge-->
+<!--        <a target="_blank" href="https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/">here</a>.-->
+<!--    </p>-->
+<!--</footer>-->
