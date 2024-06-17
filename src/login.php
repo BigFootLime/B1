@@ -5,6 +5,7 @@
 ?>
 <head>
     <link rel="stylesheet" type="text/css" href="login.css" />
+    <link rel="stylesheet" type="text/css" href="./output.css" />
 </head>
 <img
 <h3>PharmaSys, gestion de stock simplifié et efficace !</h3>
