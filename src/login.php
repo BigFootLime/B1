@@ -1,8 +1,11 @@
 
 <?php
 //$_get
+;  
  ?>
-
+ <head>
+ <link rel="stylesheet" type="text/css" href="login.css" />
+</head>
 <h2>Weekly Coding Challenge #1: Sign in/up Form</h2>
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
