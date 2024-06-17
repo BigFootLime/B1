@@ -6,36 +6,28 @@
 <head>
     <link rel="stylesheet" type="text/css" href="login.css" />
 </head>
-<h2>Weekly Coding Challenge #1: Sign in/up Form</h2>
+<img
+<h3>PharmaSys, gestion de stock simplifié et efficace !</h3>
 <div class="container" id="container">
     <div class="form-container sign-up-container">
         <form action="#">
-            <h1>Create Account</h1>
+            <h1>Crée un compte</h1>
             <div class="social-container">
-                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-            <span>or use your email for registration</span>
             <input type="text" placeholder="Email" />
             <input type="email" placeholder="Password" />
             <input type="password" placeholder="ForgetPsw" />
             <button>Sign Up</button>
         </form>
     </div>
-    <div class="form-container sign-in-container">
+</div>
+
+<div class="form-container sign-in-container">
         <form action='dashboard.php' method="POST">
-            <h1>Sign in</h1>
-            <div class="social-container">
-                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-            <span>or use your account</span>
+            <h2>Sign in</h2>
             <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
+            <input type="password" placeholder="Mot de passe" />
             <a href="#">Forgot your password?</a>
-            <button type="submit">Sign In</button>
+            <button type="submit" value="envoyer">Sign In</button>
         </form>
     </div>
     <div class="overlay-container">
@@ -46,9 +38,12 @@
                 <button class="ghost" id="signIn">Sign In</button>
             </div>
             <div class="overlay-panel overlay-right">
-                <h1>Hello, Friend!</h1>
-                <p>Enter your personal details and start journey with us</p>
-                <button class="ghost" id="signUp">Sign Up</button>
+                <form class="formtrans"method="post" action="signUp.php">
+                    <h1>Hello, Friend!</h1>
+                    <p>Enter your personal details and start journey with us</p>
+                    <button class="ghost" id="signUp" type="submit"> Sign Up</button>
+                </form>
+
             </div>
         </div>
     </div>
