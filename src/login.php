@@ -56,8 +56,6 @@ if ($mail=="philipe@gmail.com" && $mdp=="123456"){
             </div>
         </div>
     </div>
-</div>
-
 <!--<footer>-->
 <!--    <p>-->
 <!--        Created with <i class="fa fa-heart"></i> by-->
