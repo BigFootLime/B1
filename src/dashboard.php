@@ -14,7 +14,7 @@
       <i class="bi bi-filter-left px-2 bg-gray-900 rounded-md"></i>
     </span>
     <div
-      class="sidebar fixed top-0 bottom-0 lg:left-0 p-2 w-[300px] overflow-y-auto text-center bg-gray-900 rounded-lg"
+      class="sidebar fixed top-0 bottom-0 lg:left-0 p-2 w-[300px] overflow-y-auto text-center bg-gray-900 rounded-r-lg"
     >
       <div class="text-gray-100 text-xl">
         <div class="p-2.5 mt-1 flex items-center">
@@ -41,7 +41,12 @@
         class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-[#05B6A1] text-white"
       >
         <i class="bi bi-house-door-fill"></i>
-        <span class="text-[15px] ml-4 text-gray-200 font-bold">Accueil</span>
+		<form class="bg-transparent" action="accueil.php" method="post">
+        <button type="submit" value="Envoyer" id="accueilButton" class="text-[15px] ml-4 text-gray-200 font-bold">
+			Accueil
+		</button>
+		</form>
+		
       </div>
       <div
         class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-[#05B6A1] text-white"
@@ -82,6 +87,7 @@
         <i class="bi bi-box-arrow-in-right"></i>
         <span class="text-[15px] ml-4 text-gray-200 font-bold">Logout</span>
       </div>
+      
     </div>
 
     <script type="text/javascript">
