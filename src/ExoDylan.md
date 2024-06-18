@@ -62,7 +62,7 @@ Question 10
 
 10. Trouver les villes dont le nom sonore (Soundex) est identique à celui de 'Lyon'
 
-
+SELECT * FROM villes WHERE Soundex(nom) = Soundex('Lyon')
 
 
 **PARTIE 2** 
