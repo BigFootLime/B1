@@ -85,6 +85,12 @@ input {
     border-radius: 30px;
 }
 
+.errortext {
+    color: red;
+    background-color: red;
+
+}
+
 .container {
     background-color: #fff;
     border-radius: 10px;

@@ -1,12 +1,6 @@
 
 <?php
 
-$mail="philipe@gmail.com";
-$mdp="123456";
-
-if ($mail=="philipe@gmail.com" && $mdp=="123456"){
-
-}
 ?>
 <head>
     <link rel="stylesheet" type="text/css" href="login.css" />
