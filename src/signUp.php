@@ -1,3 +1,7 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="signUp.css"/>
+</head>
+
 <?php
 $host = '127.0.0.1';
 $db   = 'pharmasys_db';
@@ -12,37 +16,40 @@ $options = [
     PDO::ATTR_EMULATE_PREPARES   => false,
 ];
 
+
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 
+        // vérifie que les donnée on bien été renseigner (le message reste temps qu'il n'y a pas de données)
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
         $prenom = $_POST['prenom'];
         $nom = $_POST['nom'];
         $email = $_POST['email'];
         $password = $_POST['mdp'];
 
-        // Validate name and surname
+        // vérifie que la taille est bonne
         if (strlen($prenom) < 2) $errors['prenom'] = "Le prénom doit contenir au moins 2 lettres.";
         if (strlen($nom) < 2) $errors['nom'] = "Le nom doit contenir au moins 2 lettres.";
 
-        // Validate email uniqueness
+        // vérifie si l'email n'est pas déjà pris
         $stmt = $pdo->prepare("SELECT COUNT(*) FROM utilisteur WHERE mail = :email");
         $stmt->execute(['email' => $email]);
         if ($stmt->fetchColumn() > 0) $errors['email'] = "L'email est déjà utilisé.";
 
-        // Validate password length
+        // vérifie la longeur du mdp
         if (strlen($password) < 10) $errors['mdp'] = "Le mot de passe doit contenir au moins 10 caractères.";
 
-        // If no errors, proceed with insertion
+        // si il n'y a pas d'erreur alors on peu mettre les données dans notre table
         if (empty($errors)) {
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
             $sql = "INSERT INTO utilisteur (prenom, nom, mail, password) VALUES (:prenom, :nom, :mail, :password)";
             $stmt = $pdo->prepare($sql);
             $stmt->execute(['prenom' => $prenom, 'nom' => $nom, 'mail' => $email, 'password' => $passwordHash]);
-            echo "Inscription réussie !";
+
+            echo "<h3>Inscription réussie !</h3>";
         }
     } else {
-        echo "Erreur: Aucune donnée soumise.";
+        echo "<h2 class='titleerror'>Aucune donnée n'a été soumise.</h2>";
     }
 
 } catch (\PDOException $e) {
@@ -50,8 +57,6 @@ try {
 }
 ?>
 
-<link rel="stylesheet" type="text/css" href="signUp.css"/>
-</head>
 <body>
 <div class="container" id="container">
     <div class="form-container sign-up-container">
@@ -81,6 +86,7 @@ try {
         </form>
     </div>
 </div>
+</body>
 <footer>
 </footer>
 
