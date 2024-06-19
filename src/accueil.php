@@ -6,8 +6,11 @@
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+ <!-- **************************************************SIDEBAR*********************************************************************** -->
 <body class="bg-gradient-to-r from-[#04CD59] to-[#05B6A1]">
+  
 <span
       class="absolute text-white text-4xl top-5 left-4 cursor-pointer"
       onclick="openSidebar()"
@@ -37,57 +40,23 @@
           placeholder="Search"
           class="text-[15px] ml-4 w-full bg-transparent focus:outline-none"
         />
+      </div>    	
+        <a href="./accueil.php" id="accueilButton" class="text-[15px] ml-4 text-gray-200 font-bold">
+        <div
+        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-[#05B6A1] text-white">Accueil
       </div>
-      <div
-        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-[#05B6A1] text-white"
-      >
-        <i class="bi bi-house-door-fill"></i>
-		<form class="bg-transparent" action="accueil.php" method="post">
-        <button type="submit" value="Envoyer" id="accueilButton" class="text-[15px] ml-4 text-gray-200 font-bold">
-			Accueil
-		</button>
-		</form>
-		
+    </a>	
+    <a href="./accueil.php" id="accueilButton" class="text-[15px] ml-4 text-gray-200 font-bold">
+        <div
+        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-[#05B6A1] text-white">Gestion de Stock
       </div>
-      <div
-        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-[#05B6A1] text-white"
-      >
-        <i class="bi bi-bookmark-fill"></i>
-        <span class="text-[15px] ml-4 text-gray-200 font-bold">Gestion de Stock</span>
-      </div>
+    </a>	
       <div class="my-4 bg-gray-600 h-[1px]"></div>
-      <div
-        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
-        onclick="dropdown()"
-      >
-        <i class="bi bi-chat-left-text-fill"></i>
-        <div class="flex justify-between w-full items-center">
-          <span class="text-[15px] ml-4 text-gray-200 font-bold">Chatbox</span>
-          <span class="text-sm rotate-180" id="arrow">
-            <i class="bi bi-chevron-down"></i>
-          </span>
-        </div>
+      <a href="./accueil.php" id="accueilButton" class="text-[15px] ml-4 text-gray-200 font-bold">
+        <div
+        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-[#05B6A1] text-white">Logout
       </div>
-      <div
-        class="text-left text-sm mt-2 w-4/5 mx-auto text-gray-200 font-bold"
-        id="submenu"
-      >
-        <h1 class="cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1">
-          Social
-        </h1>
-        <h1 class="cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1">
-          Personal
-        </h1>
-        <h1 class="cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1">
-          Friends
-        </h1>
-      </div>
-      <div
-        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
-      >
-        <i class="bi bi-box-arrow-in-right"></i>
-        <span class="text-[15px] ml-4 text-gray-200 font-bold">Logout</span>
-      </div>
+    </a>	
       
     </div>
 
@@ -102,50 +71,189 @@
         document.querySelector(".sidebar").classList.toggle("hidden");
       }
     </script>
-    <div class="container mx-auto p-4 ml-80">
-        <h1 class="text-2xl font-bold mb-4">Dashboard</h1>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div class="bg-white p-4 rounded shadow">
-                <h3 class="text-xl font-semibold mb-2">Produits en stock</h3>
-                <ul>
-                    <?php foreach ($in_stock as $product) : ?>
-                        <li><?php echo $product['name']; ?> (Stock: <?php echo $product['stock']; ?>)</li>
-                    <?php endforeach; ?>
-                </ul>
+     <!-- **************************************************SIDEBAR END*********************************************************************** -->
+     <!-- **************************************************RECUPERATION DONNEES*********************************************************************** -->
+    <?php
+    $host = '127.0.0.1';
+    $db   = 'pharmasys_db';
+    $user = 'root';
+    $pass = '';
+    $charset = 'utf8mb4';
+    
+    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+    $options = [
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES   => false,
+    ];
+    
+    try {
+      // Se connecter à la base de données
+        $pdo = new PDO($dsn, $user, $pass, $options);
+        
+        // Récupérer les données
+        $in_stock = $pdo->query("SELECT name, quantity FROM medicaments WHERE quantity > 0")->fetchAll();
+        $out_of_stock = $pdo->query("SELECT name FROM medicaments WHERE quantity = 0")->fetchAll();
+        $most_sold = $pdo->query("SELECT name, sold FROM medicaments ORDER BY sold DESC LIMIT 5")->fetchAll();
+        $least_sold = $pdo->query("SELECT name, sold FROM medicaments ORDER BY sold ASC LIMIT 5")->fetchAll();
+        $low_stock = $pdo->query("SELECT name, quantity FROM medicaments WHERE quantity < 30")->fetchAll();
+    
+    } catch (\PDOException $e) {
+        throw new \PDOException($e->getMessage(), (int)$e->getCode());
+    }
+    ?>
+     <!-- **************************************************END RECUPERATION DONNEES*********************************************************************** -->
+  <!-- **************************************************TABLEAU 1*********************************************************************** -->
+  <div class="container mx-auto px-4 lg:px-8 xl:ml-80 bg-white rounded-lg shadow-lg mt-6">
+    <h1 class="text-xl md:text-2xl font-bold mb-4 text-gray-900">Dashboard</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <div class="bg-white p-4 rounded-lg shadow-md max-h-screen md:row-span-2">
+            <h2 class="text-lg md:text-xl font-semibold mb-2">Produits en Stock</h2>
+            <div class="relative h-64 md:h-[80vh]">
+                <canvas id="inStockChart" class="w-full h-full"></canvas>
             </div>
-            <div class="bg-white p-4 rounded shadow">
-                <h3 class="text-xl font-semibold mb-2">Produits en rupture de stock</h3>
-                <ul>
-                    <?php foreach ($out_of_stock as $product) : ?>
-                        <li><?php echo $product['name']; ?></li>
-                    <?php endforeach; ?>
-                </ul>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-md max-h-80">
+            <h2 class="text-lg md:text-xl font-semibold mb-2">Produits Vendus</h2>
+            <div class="relative h-64">
+                <canvas id="mostSoldChart" class="w-full h-full"></canvas>
             </div>
-            <div class="bg-white p-4 rounded shadow">
-                <h3 class="text-xl font-semibold mb-2">Produits les plus vendus</h3>
-                <ul>
-                    <?php foreach ($most_sold as $product) : ?>
-                        <li><?php echo $product['name']; ?> (Sold: <?php echo $product['sold']; ?>)</li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-            <div class="bg-white p-4 rounded shadow">
-                <h3 class="text-xl font-semibold mb-2">Produits les moins vendus</h3>
-                <ul>
-                    <?php foreach ($least_sold as $product) : ?>
-                        <li><?php echo $product['name']; ?> (Sold: <?php echo $product['sold']; ?>)</li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-            <div class="bg-white p-4 rounded shadow">
-                <h3 class="text-xl font-semibold mb-2">Stocks bas (inférieurs à 10)</h3>
-                <ul>
-                    <?php foreach ($low_stock as $product) : ?>
-                        <li><?php echo $product['name']; ?> (Stock: <?php echo $product['stock']; ?>)</li>
-                    <?php endforeach; ?>
-                </ul>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-md max-h-80">
+            <h2 class="text-lg md:text-xl font-semibold mb-2">Produits en rupture de Stock</h2>
+            <div class="relative h-64">
+                <canvas id="noStockChart" class="w-full h-full"></canvas>
             </div>
         </div>
     </div>
+</div>
+
+        <script>
+        // Convertir les données PHP en données JavaScript en utilisant json_encode
+        var inStockProd = <?php echo json_encode($in_stock); ?>;
+        var mostSoldProd = <?php echo json_encode($most_sold); ?>;
+        var lowStockProd = <?php echo json_encode($out_of_stock); ?>;
+
+        // Extraires les labels et les valeurs pour les produits en stock
+        var stockLabels = [];
+        var stockValues = [];
+        for (var i = 0; i < inStockProd.length; i++) {
+          // Récupérer le nom et la quantité de chaque produit push permet d'ajouter un élément à la fin du tableau
+            stockLabels.push(inStockProd[i].name);
+            stockValues.push(inStockProd[i].quantity);
+           
+        }
+
+        // Extraries les labels et les valeurs pour les produits les plus vendus
+        var mostSoldLabels = [];
+        var mostSoldValues = [];
+        for (var j = 0; j < mostSoldProd.length; j++) {
+            mostSoldLabels.push(mostSoldProd[j].name);
+            mostSoldValues.push(mostSoldProd[j].sold);
+        }
+
+        var lowStockLabels = [];
+        var lowStockValues = [];
+        for (var i = 0; i < lowStockProd.length; i++) {
+          // Récupérer le nom et la quantité de chaque produit push permet d'ajouter un élément à la fin du tableau
+            stockLabels.push(lowStockProd[i].name);
+            stockValues.push(lowStockProd[i].quantity);
+           
+        }
+
+        // Créer les graphiques
+        var graph1 = document.getElementById('inStockChart').getContext('2d');
+        var inStockChart = new Chart(graph1, {
+            type: 'bar', 
+            data: {
+                labels: stockLabels,
+                datasets: [{
+                    label: 'Quantité en Stock',
+                    data: stockValues,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        // <!-- **************************************************END TABLEAU 1*********************************************************************** -->
+        // <!-- **************************************************TABLEAU 2*********************************************************************** -->
+        var graph2 = document.getElementById('mostSoldChart').getContext('2d');
+        var mostSoldChart = new Chart(graph2, {
+            type: 'pie',
+            data: {
+                labels: mostSoldLabels,
+                datasets: [{
+                    label: 'Unités Vendues',
+                    data: mostSoldValues,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Produits les plus Vendus'
+                    }
+                }
+            }
+            
+        });
+        var graph3 = document.getElementById('noStockChart').getContext('2d');
+        var noStockChart = new Chart(graph3, {
+            type: 'bar', 
+            data: {
+                labels: stockLabels,
+                datasets: [{
+                    label: 'En rupture de Stock',
+                    data: lowStockValues,
+                    backgroundColor: 'red',
+                    borderColor: 'darkred',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+     <!-- **************************************************END TABLEAU 2*********************************************************************** -->
+</div>
 </body>
 </html>
