@@ -46,7 +46,7 @@
         class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-[#05B6A1] text-white">Accueil
       </div>
     </a>	
-    <a href="./accueil.php" id="accueilButton" class="text-[15px] ml-4 text-gray-200 font-bold">
+    <a href="./gestionproduits.php" id="accueilButton" class="text-[15px] ml-4 text-gray-200 font-bold">
         <div
         class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-[#05B6A1] text-white">Gestion de Stock
       </div>
