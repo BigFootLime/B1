@@ -32,7 +32,7 @@ try {
         if (strlen($nom) < 2) $errors['nom'] = "Le nom doit contenir au moins 2 lettres.";
 
         // vérifie si l'email n'est pas déjà pris
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM utilisteur WHERE mail = :email");
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM utilisateur WHERE mail = :email");
         $stmt->execute(['email' => $email]);
         if ($stmt->fetchColumn() > 0) $errors['email'] = "L'email est déjà utilisé.";
 
@@ -42,7 +42,7 @@ try {
         // si il n'y a pas d'erreur alors on peu mettre les données dans notre table
         if (empty($errors)) {
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO utilisteur (prenom, nom, mail, password) VALUES (:prenom, :nom, :mail, :password)";
+            $sql = "INSERT INTO utilisateur (prenom, nom, mail, password) VALUES (:prenom, :nom, :mail, :password)";
             $stmt = $pdo->prepare($sql);
             $stmt->execute(['prenom' => $prenom, 'nom' => $nom, 'mail' => $email, 'password' => $passwordHash]);
 

@@ -23,7 +23,7 @@ try {
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        $stmt = $pdo->prepare("SELECT * FROM utilisteur WHERE mail = :email");
+        $stmt = $pdo->prepare("SELECT * FROM utilisateur WHERE mail = :email");
         $stmt->execute(['email' => $email]);
         $userfound = $stmt->fetch();
 
@@ -39,16 +39,18 @@ try {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
 ?>
+<html lang="fr">
 
 
 <head>
+    <title>LogIn PharmaSys</title>
     <link rel="stylesheet" type="text/css" href="login.css" />
 </head>
 
 <body>
 <div>
 </div>
-<img src="../src/assets/LOGOPHARMASYS.png">
+<img src="../src/assets/LOGOPHARMASYS.png" alt="NoImage">
 <h3>PharmaSys, gestion de stock simplifié et efficace !</h3>
 <div class="container" id="container">
     <div class="form-container sign-up-container">
