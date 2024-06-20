@@ -68,11 +68,6 @@ try {
 </div>
     <div class="overlay-container">
         <div class="overlay">
-            <div class="overlay-panel overlay-left">
-                <h1>Welcome Back!</h1>
-                <p>To keep connected with us please login with your personal info</p>
-                <button class="ghost" id="signIn">Sign In</button>
-            </div>
             <div class="overlay-panel overlay-right">
                 <form class="formtrans" method="post" action="signUp.php">
                     <h1>Bonjour!</h1>
