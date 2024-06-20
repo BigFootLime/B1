@@ -29,6 +29,32 @@ try {
 } catch (PDOException $e) {
     throw new PDOException($e->getMessage(), (int)$e->getCode());
 }
+
+try {
+    $pdo = new PDO($dsn, $user, $pass, $options);
+
+    if (isset($_POST['delete'])) {
+        $id = $_POST['delete_id'];
+        $sql = "DELETE FROM medicaments WHERE id = ?";
+        $stmt = $pdo->prepare($sql);
+        if ($stmt->execute([$id])) {
+            echo "<script>alert('Product deleted successfully');</script>";
+            echo "<script>window.location.href = window.location.href;</script>"; 
+            exit;
+        } else {
+            echo "<script>alert('Error deleting product');</script>";
+        }
+    }
+
+ 
+    $sql = "SELECT img_path, name, description, expire_date, form, manufacturer, price, quantity, sold, id FROM medicaments";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    throw new PDOException($e->getMessage(), (int)$e->getCode());
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -118,29 +144,35 @@ try {
                 </tr>
             </thead>
             <tbody>
-                <?php
-                if (!empty($result)) {
-                    // Output data of each row
-                    foreach ($result as $row) {
-                        echo "<tr class='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>";
-                        echo "<td class='p-4'><img src='" . $row["img_path"] . "' class='w-16 md:w-32 max-w-full max-h-full' alt='Product Image'></td>";
-                        echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["name"] . "</td>";
-                        echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["description"] . "</td>";
-                        echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>$" . $row["price"] . "</td>";
-                        echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["expire_date"] . "</td>";
-                        echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["form"] . "</td>";
-                        echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["manufacturer"] . "</td>";
-                        echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["quantity"] . "</td>";
-                        echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["sold"] . "</td>";
-                        echo "<td class='px-6 py-4'><button class='font-medium bg-red-600 sm:rounded-lg p-2  text-white dark:text-red-500 hover:underline'>Remove</button></td>";
-                        echo "<td class='px-6 py-4'><a href='#' class='font-medium bg-sky-600 sm:rounded-lg p-2  text-white dark:text-sky-500 hover:underline'>Modify</a></td>";
-                        echo "</tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='10' class='px-6 py-4 text-center font-semibold text-gray-900 dark:text-white'>No data found</td></tr>";
-                }
-                ?>
-            </tbody>
+            <tbody>
+    <?php
+    if (!empty($result)) {
+        foreach ($result as $row) {
+            echo "<tr class='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>";
+            echo "<td class='p-4'><img src='" . $row["img_path"] . "' class='w-16 md:w-32 max-w-full max-h-full' alt='Product Image'></td>";
+            echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["name"] . "</td>";
+            echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["description"] . "</td>";
+            echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>$" . $row["price"] . "</td>";
+            echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["expire_date"] . "</td>";
+            echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["form"] . "</td>";
+            echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["manufacturer"] . "</td>";
+            echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["quantity"] . "</td>";
+            echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["sold"] . "</td>";
+            echo "<td class='px-6 py-4'>
+                <form method='post' action=''>
+                    <input type='hidden' name='delete_id' value='" . $row["id"] . "'>
+                    <button type='submit' name='delete' class='font-medium bg-red-600 sm:rounded-lg p-2 text-white dark:text-red-500 hover:underline'>Remove</button>
+                </form>
+            </td>";
+            echo "<td class='px-6 py-4'><a href='#' class='font-medium bg-sky-600 sm:rounded-lg p-2  text-white dark:text-sky-500 hover:underline'>Modify</a></td>";
+            echo "</tr>";
+        }
+    } else {
+        echo "<tr><td colspan='10' class='px-6 py-4 text-center font-semibold text-gray-900 dark:text-white'>No data found</td></tr>";
+    }
+    ?>
+</tbody>
+
         </table>
     </div>
 <!----------------------------------------------------------------TABLE END---------------------------------------------------------------------------------->
