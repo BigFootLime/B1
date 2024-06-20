@@ -46,7 +46,7 @@
         class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-[#05B6A1] text-white">Accueil
       </div>
     </a>	
-    <a href="./accueil.php" id="accueilButton" class="text-[15px] ml-4 text-gray-200 font-bold">
+    <a href="./gestionproduits.php" id="accueilButton" class="text-[15px] ml-4 text-gray-200 font-bold">
         <div
         class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-[#05B6A1] text-white">Gestion de Stock
       </div>
@@ -91,9 +91,9 @@
       // Se connecter à la base de données
         $pdo = new PDO($dsn, $user, $pass, $options);
         
-        // Récupérer les données
+        // Récupérer toutes les données
         $in_stock = $pdo->query("SELECT name, quantity FROM medicaments WHERE quantity > 0")->fetchAll();
-        $out_of_stock = $pdo->query("SELECT name FROM medicaments WHERE quantity = 0")->fetchAll();
+        $out_of_stock = $pdo->query("SELECT name, quantity FROM medicaments WHERE quantity <= 0")->fetchAll();
         $most_sold = $pdo->query("SELECT name, sold FROM medicaments ORDER BY sold DESC LIMIT 5")->fetchAll();
         $least_sold = $pdo->query("SELECT name, sold FROM medicaments ORDER BY sold ASC LIMIT 5")->fetchAll();
         $low_stock = $pdo->query("SELECT name, quantity FROM medicaments WHERE quantity < 30")->fetchAll();
@@ -154,10 +154,10 @@
 
         var lowStockLabels = [];
         var lowStockValues = [];
-        for (var i = 0; i < lowStockProd.length; i++) {
+        for (var k = 0; k < lowStockProd.length; k++) {
           // Récupérer le nom et la quantité de chaque produit push permet d'ajouter un élément à la fin du tableau
-            stockLabels.push(lowStockProd[i].name);
-            stockValues.push(lowStockProd[i].quantity);
+          lowStockLabels.push(lowStockProd[k].name);
+          lowStockValues.push(lowStockProd[k].quantity);
            
         }
 
@@ -233,7 +233,7 @@
         var noStockChart = new Chart(graph3, {
             type: 'bar', 
             data: {
-                labels: stockLabels,
+                labels: lowStockLabels,
                 datasets: [{
                     label: 'En rupture de Stock',
                     data: lowStockValues,

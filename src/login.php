@@ -29,7 +29,7 @@ try {
 
         if ($userfound && password_verify($password, $userfound['password'])) {
             $_SESSION['user'] = $userfound['id'];
-            header('Location: dashboard.php');
+            header('Location: accueil.php');
             exit;
         } else {
             $error = 'identifiant incorrecte';
