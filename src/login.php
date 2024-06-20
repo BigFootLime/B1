@@ -14,7 +14,7 @@ $options = [
     PDO::ATTR_EMULATE_PREPARES   => false,
 ];
 
-$error = ''; // initialise la variable
+$error = ''; 
 
 try {
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
