@@ -6,6 +6,9 @@ module.exports = {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
       },
+      transitionDuration: {
+        400: "400ms",
+      },
     },
   },
   plugins: [],
