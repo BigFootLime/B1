@@ -90,9 +90,10 @@ if you have not, retry, you probably did something wrong or put it in the wrong 
 
 ### Utilisateur
 
-this table is use for the inscription of the user, when they go to the SingUP page,
+this table is use for the inscription of the user, when they go to the SingUP page,\
 they will enter there information (mail, name, surname and the password). In our php code
-we also do some modification to keep everything 'safe' and reliable. It mean that we hash 
+we also do some modification to keep everything 'safe' and reliable. \
+It mean that we hash 
 the entered password for more safety and also make the 'mail' column UNIQUE so it make sure
 only 1 mail is used 
 
@@ -106,15 +107,27 @@ only 1 mail is used
 
 ## Explanation php SignIn and SignUp
 
-Let me introduce some code that I did. 
-When we go on 'localhost/b1/src' in our browser, we directly access to the 'login.php' page
-it's because our index automatically redirect us on this page. 
+Let me introduce some code that I did.\ 
+When we go on 'localhost/b1/src' in our browser, we directly access to the 'login.php' page\
+it's because our index automatically redirect us on this page.\
 I will not talk much now for the 'login.php' code cause first, we need to SignUp !
 
 So for the SignUp button I just do a 'form' with a 'action' that take us directly to the 
 'signUp.php' page.\
-**Take a look :**
+**Take a look :**\
 ![](./src/assets/loginSignUp.php.png)
+
+### SignUp
+Let's take a look to the 'signUp' code, 
+
+Here, when do you want to sign up you have to enter :\
+Name\
+Surname\
+E-mail  
+Password\
+We did some specific setting to make sure that everything is safe and reliable.\
+So I will skip the first setting cause it is just how to link and connect to the DataBase.\
+I will talk with more detail for the setting so you can understand what they did.
 
 
 
