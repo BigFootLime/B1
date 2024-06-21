@@ -27,19 +27,19 @@ try {
         $email = $_POST['email'];
         $password = $_POST['mdp'];
 
-        // vérifie que la taille est bonne
+        // Check tif the length is good
         if (strlen($prenom) < 2) $errors['prenom'] = "Le prénom doit contenir au moins 2 lettres.";
         if (strlen($nom) < 2) $errors['nom'] = "Le nom doit contenir au moins 2 lettres.";
 
-        // vérifie si l'email n'est pas déjà pris
+        // Check if the mail is not already taken
         $stmt = $pdo->prepare("SELECT COUNT(*) FROM utilisateur WHERE mail = :email");
         $stmt->execute(['email' => $email]);
         if ($stmt->fetchColumn() > 0) $errors['email'] = "L'email est déjà utilisé.";
 
-        // vérifie la longeur du mdp
+        // Check if the length of the pwd is good
         if (strlen($password) < 10) $errors['mdp'] = "Le mot de passe doit contenir au moins 10 caractères.";
 
-        // si il n'y a pas d'erreur alors on peu mettre les données dans notre table
+        // if there is no error, we can put everything in the DB
         if (empty($errors)) {
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
             $sql = "INSERT INTO utilisateur (prenom, nom, mail, password) VALUES (:prenom, :nom, :mail, :password)";

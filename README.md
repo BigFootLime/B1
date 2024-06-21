@@ -126,8 +126,51 @@ Surname\
 E-mail  
 Password\
 We did some specific setting to make sure that everything is safe and reliable.\
-So I will skip the first setting cause it is just how to link and connect to the DataBase.\
-I will talk with more detail for the setting so you can understand what they did.
+So I will skip the first setting because it is just how to link and connect to the DataBase.\
+I will talk with more detail for the setting, so you can understand what they did.
+
+First I put every PHP code in a 'try catch' bloc, then in there I put some 'if' to do my code\
+The first one is a condition that make sure every case is filled and if not it put an error message\
+![](./src/assets/ifcheckempty.png)
+
+after I put 3 other 'if' condition in the first one to check 3 thing :  
+If the Name and the Surname is more than 2 character long, if not, it sends an error message  
+If the mail is taken, if the mail is took it send an error message  
+If the password is 10 character long, if not it send an error message  
+![](./src/assets/ifcheck-2.php.png)
+
+If every condition is reunited, we can put everything in our DataBase  
+![](./src/assets/intheDB.png)
+
+I also do some little php code for put error message between each 'input'  
+![](./src/assets/errormsg.png)
+
+### SignIn
+
+here how the SignIn code work :  
+
+ first we initialize an error variable '$error' to store any error messages.  
+The code checks if the HTTP request method is POST and if the POST data is not empty.  
+We initialize 2 variable, email and password  
+After the code prepare and executes a SQL statement to select  
+a user record based on the provided email.
+For the password checks, it if the fetched user record exists and if  
+the provided password matches the stored password hash using password_verify.
+If the credentials are correct, it stores the user's ID in the session 
+and redirects to our main page 
+and we have the 'else' here to put a message if there is one part missing  
+ ![](./src/assets/loginphp.png)
+
+Just after in the html part I put a 'form' that put an error message if the credential  
+are wrong and the input after ensures that the email field will  
+retain the value entered by the user  
+![](./src/assets/signininput.png)
+
+
+<!-- a Keenan d'expliquer ce que lui a fait-->
+
+
+
 
 
 
