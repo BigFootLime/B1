@@ -13,24 +13,6 @@ $options = [
 ];
 
 try {
-    // Se connecter à la base de données
-    $pdo = new PDO($dsn, $user, $pass, $options);
-
-    // Préparer la requête SQL
-    $sql = "SELECT img_path, name, description, expire_date, form, manufacturer, price, quantity, sold FROM medicaments";
-    $stmt = $pdo->prepare($sql);
-
-    // Exécuter la requête
-    $stmt->execute();
-
-    // Récupérer toutes les données
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-} catch (PDOException $e) {
-    throw new PDOException($e->getMessage(), (int)$e->getCode());
-}
-
-try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 
     if (isset($_POST['delete'])) {
@@ -46,7 +28,28 @@ try {
         }
     }
 
- 
+    if (isset($_POST['update'])) {
+        $id = $_POST['update_id'];
+        $name = $_POST['name'];
+        $description = $_POST['description'];
+        $price = $_POST['price'];
+        $expire_date = $_POST['expire_date'];
+        $form = $_POST['form'];
+        $manufacturer = $_POST['manufacturer'];
+        $quantity = $_POST['quantity'];
+        $sold = $_POST['sold'];
+        
+        $sql = "UPDATE medicaments SET name = ?, description = ?, price = ?, expire_date = ?, form = ?, manufacturer = ?, quantity = ?, sold = ? WHERE id = ?";
+        $stmt = $pdo->prepare($sql);
+        if ($stmt->execute([$name, $description, $price, $expire_date, $form, $manufacturer, $quantity, $sold, $id])) {
+            echo "<script>alert('Product updated successfully');</script>";
+            echo "<script>window.location.href = window.location.href;</script>";
+            exit;
+        } else {
+            echo "<script>alert('Error updating product');</script>";
+        }
+    }
+
     $sql = "SELECT img_path, name, description, expire_date, form, manufacturer, price, quantity, sold, id FROM medicaments";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
@@ -56,6 +59,7 @@ try {
     throw new PDOException($e->getMessage(), (int)$e->getCode());
 }
 ?>
+<!------------------------------PHP CODE SECTION END------------------------------------>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -140,10 +144,9 @@ try {
                     <th scope="col" class="px-6 py-3">Quantity</th>
                     <th scope="col" class="px-6 py-3">Sold</th>
                     <th scope="col" class="px-6 py-3">Actions</th>
-                    <th scope="col" class="px-6 py-3"></th>
+
                 </tr>
             </thead>
-            <tbody>
             <tbody>
     <?php
     if (!empty($result)) {
@@ -158,13 +161,13 @@ try {
             echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["manufacturer"] . "</td>";
             echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["quantity"] . "</td>";
             echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["sold"] . "</td>";
-            echo "<td class='px-6 py-4'>
+            echo "<td class='px-6 py-4 flex flex-row items-center'>
                 <form method='post' action=''>
                     <input type='hidden' name='delete_id' value='" . $row["id"] . "'>
-                    <button type='submit' name='delete' class='font-medium bg-red-600 sm:rounded-lg p-2 text-white dark:text-red-500 hover:underline'>Remove</button>
+                    <button type='submit' name='delete' class='font-medium mx-2 bg-red-600 sm:rounded-lg p-2 text-white dark:text-red-500 hover:underline'>Remove</button>
                 </form>
+                <button type='button' class='font-medium  bg-sky-600 sm:rounded-lg p-2 text-white dark:text-sky-500 hover:underline' onclick='showEditForm(" . json_encode($row) . ")'>Modify</button>
             </td>";
-            echo "<td class='px-6 py-4'><a href='#' class='font-medium bg-sky-600 sm:rounded-lg p-2  text-white dark:text-sky-500 hover:underline'>Modify</a></td>";
             echo "</tr>";
         }
     } else {
@@ -175,7 +178,47 @@ try {
 
         </table>
     </div>
-<!----------------------------------------------------------------TABLE END---------------------------------------------------------------------------------->
+
+    <div id="edit-form-container" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+        <form method="post" action="" class="bg-white p-6 rounded-lg w-full md:w-[50%]">
+            <input type="hidden" name="update_id" id="update_id">
+            <div class="mb-4">
+                <label for="name" class="block text-gray-700">Name</label>
+                <input type="text" name="name" id="edit_name" class="w-full p-2 border border-gray-300 rounded mt-1">
+            </div>
+            <div class="mb-4">
+                <label for="description" class="block text-gray-700">Description</label>
+                <textarea name="description" id="edit_description" class="w-full p-2 border border-gray-300 rounded mt-1"></textarea>
+            </div>
+            <div class="mb-4">
+                <label for="price" class="block text-gray-700">Price</label>
+                <input type="text" name="price" id="edit_price" class="w-full p-2 border border-gray-300 rounded mt-1">
+            </div>
+            <div class="mb-4">
+                <label for="expire_date" class="block text-gray-700">Expire Date</label>
+                <input type="date" name="expire_date" id="edit_expire_date" class="w-full p-2 border border-gray-300 rounded mt-1">
+            </div>
+            <div class="mb-4">
+                <label for="form" class="block text-gray-700">Form</label>
+                <input type="text" name="form" id="edit_form" class="w-full p-2 border border-gray-300 rounded mt-1">
+            </div>
+            <div class="mb-4">
+                <label for="manufacturer" class="block text-gray-700">Manufacturer</label>
+                <input type="text" name="manufacturer" id="edit_manufacturer" class="w-full p-2 border border-gray-300 rounded mt-1">
+            </div>
+            <div class="mb-4">
+                <label for="quantity" class="block text-gray-700">Quantity</label>
+                <input type="text" name="quantity" id="edit_quantity" class="w-full p-2 border border-gray-300 rounded mt-1">
+            </div>
+            <div class="mb-4">
+                <label for="sold" class="block text-gray-700">Sold</label>
+                <input type="text" name="sold" id="edit_sold" class="w-full p-2 border border-gray-300 rounded mt-1">
+            </div>
+            <button type="submit" name="update" class="bg-blue-500 text-white p-2 rounded">Save</button>
+            <button type="button" class="bg-gray-500 text-white p-2 rounded" onclick="hideEditForm()">Cancel</button>
+        </form>
+    </div>
+
     <script>
         document.getElementById('drawer-button').addEventListener('click', function() {
             document.getElementById('drawer-navigation').classList.toggle('-translate-x-full');
@@ -184,6 +227,23 @@ try {
         document.getElementById('close-drawer').addEventListener('click', function() {
             document.getElementById('drawer-navigation').classList.add('-translate-x-full');
         });
+
+        function showEditForm(data) {
+            document.getElementById('update_id').value = data.id;
+            document.getElementById('edit_name').value = data.name;
+            document.getElementById('edit_description').value = data.description;
+            document.getElementById('edit_price').value = data.price;
+            document.getElementById('edit_expire_date').value = data.expire_date;
+            document.getElementById('edit_form').value = data.form;
+            document.getElementById('edit_manufacturer').value = data.manufacturer;
+            document.getElementById('edit_quantity').value = data.quantity;
+            document.getElementById('edit_sold').value = data.sold;
+            document.getElementById('edit-form-container').classList.remove('hidden');
+        }
+
+        function hideEditForm() {
+            document.getElementById('edit-form-container').classList.add('hidden');
+        }
     </script>
 </body>
 </html>
