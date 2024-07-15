@@ -172,3 +172,24 @@ To do this, i used a plugin called Chart.js. To display the info from the databa
 ### Dashboard
 
 Let's take a look to the 'dashboard' code,
+
+### Creation of the Deployment server
+
+first of all we will need to do the installation of OCI, we need to register and then create  
+a instance on it. the only setting to change is change the OS to the lastest ubuntu .iso  
+and also save the private register key (you can also save the public one) then you will be able  
+to create and start the instance.
+
+when this is done, you will need to download PuTTY. lunch PuTTYgen and translate the private key  
+you download. Now you can lunch PuTTY, put the public IP adress of OCI and then in SSH / Auth / Credential  
+you will put the private key that we translate before.
+
+now you are able to connect on it. when you open your Ubuntu server, the username is 'ubuntu'  
+then you nee to do a `sudo apt update && upgrade` you can also, if you want, install neofetch `apt get install neofetch `
+
+Now you need to install Apache, MySQL, PHP and Git :
+apache : `sudo apt install apache2 `  
+MySQL : `sudo apt install mysql-server`  
+PHP : `sudo apt install php-fpm`  
+Git : `sudo apt install git` // `git clone https://github.com/BigFootLime/B1.git`  
+and you can check the status with `git status`
