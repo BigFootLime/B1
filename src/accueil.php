@@ -17,7 +17,7 @@
             z-index: 100;
         }
     </style>
- <!-- **************************************************SIDEBAR*********************************************************************** -->
+ <!-- **************************************************SIDEBAR*********************************************************************** TEST -->
 <body class="relative bg-gray-900 isolate font-poppins">
 <div class="absolute inset-x-0 top-4 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl" aria-hidden="true">
       <div class="aspect-[1108/632] w-full flex-none bg-gradient-to-r from-[#80caff] to-[#4f46e5] opacity-25" style="clip-path: polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)"></div>
@@ -111,7 +111,7 @@
     ?>
      <!-- **************************************************END RECUPERATION DONNEES*********************************************************************** -->
   <!-- **************************************************TABLEAU 1*********************************************************************** -->
-  <div class="mx-auto flex max-w-2xl flex-col gap-16 bg-white/5 px-6 py-16 ring-1 ring-white/10 sm:rounded-3xl sm:p-8 lg:mx-0 lg:max-w-none lg:flex-row lg:items-center lg:py-20 xl:gap-x-20 xl:px-20 font-poppins">
+  <div class="mx-auto flex max-w-2xl flex-col gap-16 bg-white/5 px-6 py-16 ring-1 ring-white/10 sm:rounded-3xl sm:p-8 lg:mx-0 lg:max-w-none lg:items-center  xl:gap-x-20 xl:px-20 font-poppins">
     <h1 class="text-xl md:text-2xl font-bold mb-4 pt-4 text-white text-center">Dashboard</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <div class="bg-white p-4 rounded-lg shadow-md max-h-full md:row-span-2">
