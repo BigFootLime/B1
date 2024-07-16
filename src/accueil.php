@@ -111,7 +111,7 @@
     ?>
      <!-- **************************************************END RECUPERATION DONNEES*********************************************************************** -->
   <!-- **************************************************TABLEAU 1*********************************************************************** -->
-  <div class="mx-auto flex max-w-2xl flex-col gap-16 bg-white/5 px-6 py-16 ring-1 ring-white/10 sm:rounded-3xl sm:p-8 lg:mx-0 lg:max-w-none lg:flex-row lg:items-center lg:py-20 xl:gap-x-20 xl:px-20 font-poppins">
+  <div class="mx-auto flex max-w-2xl flex-col gap-16 bg-white/5 px-6 py-16 ring-1 ring-white/10 sm:rounded-3xl sm:p-8 lg:mx-0 lg:max-w-none lg:items-center  xl:gap-x-20 xl:px-20 font-poppins">
     <h1 class="text-xl md:text-2xl font-bold mb-4 pt-4 text-white text-center">Dashboard</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <div class="bg-white p-4 rounded-lg shadow-md max-h-full md:row-span-2">
