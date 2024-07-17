@@ -1,10 +1,10 @@
 <?php
 
-$host =  getenv('DB_HOST_LOCAL') ? getenv('DB_HOST_SERVER') : "localhost"; 
-$db =  getenv('DB_NAME_SERVER') ? getenv('DB_NAME_SERVER') : "pharmasys_db";
+$host = "localhost"; 
+$db =  "pharmasys_db";
 $user =  getenv('DB_USERNAME_SERVER') ? getenv('DB_USERNAME_SERVER') :"root";
 $pass = getenv('DB_PASSWORD_SERVER') ? getenv('DB_PASSWORD_SERVER') : "";
-$charset =  getenv('DB_CHARSET_LOCAL') ? getenv('DB_CHARSET') : "utf8mb4";
+$charset =  getenv('DB_CHARSET_SERVER') ? getenv('DB_CHARSET') : "utf8mb4";
 
 
 echo "<script>console.log('Database Name: " . $host . "');</script>";
