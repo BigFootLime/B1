@@ -89,7 +89,7 @@ $pass = getenv('DB_PASSWORD_SERVER') ? getenv('DB_PASSWORD_SERVER') : "";
 $charset =  getenv('DB_CHARSET_SERVER') ? getenv('DB_CHARSET') : "utf8mb4";
 
 
-        $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
+        $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
         $options = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -97,7 +97,7 @@ $charset =  getenv('DB_CHARSET_SERVER') ? getenv('DB_CHARSET') : "utf8mb4";
         ];
 
         try {
-            $pdo = new PDO($dsn, $user, $password, $options);
+            $pdo = new PDO($dsn, $user, $pass, $options);
             
             $in_stock = $pdo->query("SELECT name, quantity FROM medicaments WHERE quantity > 0")->fetchAll();
             $out_of_stock = $pdo->query("SELECT name, quantity FROM medicaments WHERE quantity <= 0")->fetchAll();
@@ -136,38 +136,40 @@ $charset =  getenv('DB_CHARSET_SERVER') ? getenv('DB_CHARSET') : "utf8mb4";
     </div>
 </div>
 
-        <script>
+<script>
         // Convertir les données PHP en données JavaScript en utilisant json_encode
         var inStockProd = <?php echo json_encode($in_stock); ?>;
         var mostSoldProd = <?php echo json_encode($most_sold); ?>;
         var lowStockProd = <?php echo json_encode($out_of_stock); ?>;
 
-        // Extraires les labels et les valeurs pour les produits en stock
+        // Debugging logs
+        console.log(inStockProd);
+        console.log(mostSoldProd);
+        console.log(lowStockProd);
+
+        // Extraire les labels et les valeurs pour les produits en stock
         var stockLabels = [];
         var stockValues = [];
-        for (var i = 0; i < inStockProd.length; i++) {
-          // Récupérer le nom et la quantité de chaque produit push permet d'ajouter un élément à la fin du tableau
-            stockLabels.push(inStockProd[i].name);
-            stockValues.push(inStockProd[i].quantity);
-           
-        }
+        inStockProd.forEach(function(prod) {
+            stockLabels.push(prod.name);
+            stockValues.push(prod.quantity);
+        });
 
-        // Extraries les labels et les valeurs pour les produits les plus vendus
+        // Extraire les labels et les valeurs pour les produits les plus vendus
         var mostSoldLabels = [];
         var mostSoldValues = [];
-        for (var j = 0; j < mostSoldProd.length; j++) {
-            mostSoldLabels.push(mostSoldProd[j].name);
-            mostSoldValues.push(mostSoldProd[j].sold);
-        }
+        mostSoldProd.forEach(function(prod) {
+            mostSoldLabels.push(prod.name);
+            mostSoldValues.push(prod.sold);
+        });
 
+        // Extraire les labels et les valeurs pour les produits en rupture de stock
         var lowStockLabels = [];
         var lowStockValues = [];
-        for (var k = 0; k < lowStockProd.length; k++) {
-          // Récupérer le nom et la quantité de chaque produit push permet d'ajouter un élément à la fin du tableau
-          lowStockLabels.push(lowStockProd[k].name);
-          lowStockValues.push(lowStockProd[k].quantity);
-           
-        }
+        lowStockProd.forEach(function(prod) {
+            lowStockLabels.push(prod.name);
+            lowStockValues.push(prod.quantity);
+        });
 
         // Créer les graphiques
         var graph1 = document.getElementById('inStockChart').getContext('2d');
@@ -193,8 +195,7 @@ $charset =  getenv('DB_CHARSET_SERVER') ? getenv('DB_CHARSET') : "utf8mb4";
                 }
             }
         });
-        // <!-- **************************************************END TABLEAU 1*********************************************************************** -->
-        // <!-- **************************************************TABLEAU 2*********************************************************************** -->
+
         var graph2 = document.getElementById('mostSoldChart').getContext('2d');
         var mostSoldChart = new Chart(graph2, {
             type: 'pie',
@@ -235,8 +236,8 @@ $charset =  getenv('DB_CHARSET_SERVER') ? getenv('DB_CHARSET') : "utf8mb4";
                     }
                 }
             }
-            
         });
+
         var graph3 = document.getElementById('noStockChart').getContext('2d');
         var noStockChart = new Chart(graph3, {
             type: 'bar', 
