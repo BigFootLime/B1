@@ -193,7 +193,8 @@ MySQL :
 `sudo apt install mysql-server`  
 `sudo mysql_secure_installation`
 PHP : `sudo apt install php-fpm`  
-Git : `sudo apt install git` // then you need to be in this location /var/www/html and do : `git clone https://github.com/BigFootLime/B1.git`
+Git : `sudo apt install git` // then you need to be in this location /var/www/html and do : `git clone https://github.com/BigFootLime/B1.git`  
+you also need to give the good permission with `sudo chown -R $USER:$USER /var/www//html/pharmasys/B1`
 and you can check the status with `git status`
 
 ### We also need to start Apache2
@@ -242,7 +243,7 @@ First we need to connect with MySQL
 then we create the DB like we did in phpMyadmin
 `CREATE DATABASE pharmasys.db;`
 After we create a user with his privileges
-`CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';
+`CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';  
 GRANT ALL PRIVILEGES ON pharmasys.db* TO 'admin'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;`
