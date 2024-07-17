@@ -8,6 +8,8 @@ $user = $is_local ? getenv('DB_USERNAME_LOCAL') : getenv('DB_USERNAME_SERVER');
 $pass = $is_local ? getenv('DB_PASSWORD_LOCAL') : getenv('DB_PASSWORD_SERVER');
 $charset = $is_local ? getenv('DB_CHARSET_LOCAL') : getenv('DB_CHARSET');
 
+echo "<script>console.log('Database Name: " . $user . "');</script>";
+
 $connexion_string = "mysql:host=$host;dbname=$db;charset=$charset";
 
 $options = [
