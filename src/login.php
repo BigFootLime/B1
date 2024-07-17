@@ -52,7 +52,7 @@ try {
 <body>
 <div>
 </div>
-<img src="../src/assets/LOGOPHARMASYS.png" alt="NoImage">
+<img src="./assets/LOGOPHARMASYS.png" alt="NoImage">
 <h3>PharmaSys, gestion de stock simplifié et efficace !</h3>
 <div class="container" id="container">
     <div class="form-container sign-up-container">
