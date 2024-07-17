@@ -1,22 +1,19 @@
 <?php
-$host = getenv('DB_HOST_SERVER');
-$db   = 'pharmasys_db';
-$user = 'root';
-$pass = '';
-$charset = 'utf8mb4';
+$server_name = getenv('SERVER_NAME');
+$is_local = $server_name === 'localhost';
 
-        $host ='' ? getenv('DB_HOST') : getenv('DB_HOST_SERVER');
-        $dbname = $_SERVER['SERVER_NAME'] === 'localhost' ? getenv('DB_NAME') : getenv('DB_NAME_SERVER');
-        $user = $_SERVER['SERVER_NAME'] === 'localhost' ? getenv('DB_USERNAME') : getenv('DB_USERNAME_SERVER');
-        $password = $_SERVER['SERVER_NAME'] === 'localhost' ? getenv('DB_PASSWORD') : getenv('DB_PASSWORD_SERVER');
-        $charset = getenv('DB_CHARSET');
+$host = $is_local ? getenv('DB_HOST_LOCAL') : getenv('DB_HOST_SERVER');
+$db = $is_local ? getenv('DB_NAME_LOCAL') : getenv('DB_NAME_SERVER');
+$user = $is_local ? getenv('DB_USERNAME_LOCAL') : getenv('DB_USERNAME_SERVER');
+$pass = $is_local ? getenv('DB_PASSWORD_LOCAL') : getenv('DB_PASSWORD_SERVER');
+$charset = $is_local ? getenv('DB_CHARSET_LOCAL') : getenv('DB_CHARSET');
 
 $connexion_string = "mysql:host=$host;dbname=$db;charset=$charset";
 
 $options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
+    PDO::ATTR_EMULATE_PREPARES => false,
 ];
 
 $error = '';
@@ -28,12 +25,10 @@ try {
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-     
         $stmt = $pdo->prepare("SELECT * FROM utilisateur WHERE mail = :email");
         $stmt->execute(['email' => $email]);
         $userfound = $stmt->fetch();
 
-      
         if ($userfound && password_verify($password, $userfound['password'])) {
             $_SESSION['user'] = $userfound['id'];
             header('Location: accueil.php');
