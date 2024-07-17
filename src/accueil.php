@@ -142,11 +142,7 @@ $charset =  getenv('DB_CHARSET_SERVER') ? getenv('DB_CHARSET') : "utf8mb4";
         var mostSoldProd = <?php echo json_encode($most_sold); ?>;
         var lowStockProd = <?php echo json_encode($out_of_stock); ?>;
 
-        // Debugging logs
-        console.log(inStockProd);
-        console.log(mostSoldProd);
-        console.log(lowStockProd);
-
+        
         // Extraire les labels et les valeurs pour les produits en stock
         var stockLabels = [];
         var stockValues = [];

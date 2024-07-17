@@ -53,7 +53,7 @@ try {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body class="bg-gray-900">
     <form action="" method="POST">
     `<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -89,43 +89,15 @@ try {
         <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Sign in</button>
       </div>
     </form>
-
+    <form class="formtrans" method="post" action="signUp.php">
     <p class="mt-10 text-center text-sm text-gray-400">
-      Not a member?
-      <a href="#" class="font-semibold leading-6 text-indigo-400 hover:text-indigo-300">Start a 14 day free trial</a>
+      Vous n'avez pas de Compte?
+      <button class="font-semibold leading-6 text-indigo-400 hover:text-indigo-300">Creez en un !</button>
     </p>
+    </form>
   </div>
 </div>
 </form>
-<!-- <div>
-</div>
-<img src="./assets/LOGOPHARMASYS.png" alt="NoImage">
-<h3>PharmaSys, gestion de stock simplifié et efficace !</h3>
-<div class="container" id="container">
-    <div class="form-container sign-up-container">
-    </div>
-<div class="form-container sign-in-container">
-    <form action="" method="POST">
-        <h2>Sign in</h2>
-        <?php if ($error): ?>
-            <p class="errorlogin"><?= htmlspecialchars($error) ?></p>
-        <?php endif; ?>
-        <input type="email" name="email" placeholder="Email" value="<?= htmlspecialchars(isset($_POST['email']) ? $_POST['email'] : '') ?>" required/>
-        <input type="password" name="password" placeholder="Mot de passe" required/>
-        <button type="submit">Sign In</button>
-    </form>
-</div>
-    <div class="overlay-container">
-        <div class="overlay">
-            <div class="overlay-panel overlay-right">
-                <form class="formtrans" method="post" action="signUp.php">
-                    <h1>Bonjour!</h1>
-                    <p>Si vous n'avez pas de compte, venez le crée ici!</p>
-                    <button class="ghost" id="signUp" type="submit">Sign Up</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div> -->
+
 </body>
 </html>
