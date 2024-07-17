@@ -28,6 +28,7 @@ $error = '';
 
 try {
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
+        var_dump([$connexion_string, $user, $pass, $options  ]);
         $pdo = new PDO($connexion_string, $user, $pass, $options);
 
         $email = $_POST['email'];
