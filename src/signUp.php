@@ -6,11 +6,12 @@
 session_start();
 
 // Get environment variables
-$host = $_SERVER['SERVER_NAME'] === 'localhost' ? $_ENV['DB_HOST'] : $_ENV['DB_HOST_SERVER'];
-$db = $_SERVER['SERVER_NAME'] === 'localhost' ? $_ENV['DB_NAME'] : $_ENV['DB_NAME_SERVER'];
-$user = $_SERVER['SERVER_NAME'] === 'localhost' ? $_ENV['DB_USERNAME'] : $_ENV['DB_USERNAME_SERVER'];
-$pass = $_SERVER['SERVER_NAME'] === 'localhost' ? $_ENV['DB_PASSWORD'] : $_ENV['DB_PASSWORD_SERVER'];
-$charset = $_ENV['DB_CHARSET'];
+$host = "localhost"; 
+$db =  "pharmasys_db";
+$user =  getenv('DB_USERNAME_SERVER') ? getenv('DB_USERNAME_SERVER') :"root";
+$pass = getenv('DB_PASSWORD_SERVER') ? getenv('DB_PASSWORD_SERVER') : "";
+$charset =  getenv('DB_CHARSET_SERVER') ? getenv('DB_CHARSET') : "utf8mb4";
+
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 $options = [

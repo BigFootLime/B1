@@ -6,13 +6,6 @@ $user =  getenv('DB_USERNAME_SERVER') ? getenv('DB_USERNAME_SERVER') :"root";
 $pass = getenv('DB_PASSWORD_SERVER') ? getenv('DB_PASSWORD_SERVER') : "";
 $charset =  getenv('DB_CHARSET_SERVER') ? getenv('DB_CHARSET') : "utf8mb4";
 
-
-echo "<script>console.log('Database Name: " . $host . "');</script>";
-echo "<script>console.log('Database Name: " . $user . "');</script>";
-echo "<script>console.log('Database Name: " . $db . "');</script>";
-echo "<script>console.log('Database Name: " . $pass . "');</script>";
-echo "<script>console.log('Database Name: " . $charset . "');</script>";
-
 $connexion_string = "mysql:host=$host;dbname=$db;charset=$charset";
 echo "<script>console.log('mysql:host=$host;dbname=$db;charset=$charset');</script>";
 
