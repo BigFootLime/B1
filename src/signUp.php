@@ -51,7 +51,8 @@ try {
             $stmt = $pdo->prepare($sql);
             $stmt->execute(['prenom' => $prenom, 'nom' => $nom, 'mail' => $email, 'password' => $passwordHash]);
 
-            echo "<h3>Inscription réussie !</h3>";
+            echo "<h3>Inscription réussie ! Vous allez être redirigé d'ici quelques secondes...</h3>";
+            header('Refresh: 3; URL=login.php');
         }
     } else {
         echo "<h2 class='titleerror'>Aucune donnée n'a été soumise.</h2>";
