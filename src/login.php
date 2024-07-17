@@ -1,12 +1,10 @@
 <?php
-$server_name = getenv('SERVER_NAME');
-$is_local = $server_name === 'localhost';
 
-$host = $is_local ? getenv('DB_HOST_LOCAL') : getenv('DB_HOST_SERVER');
-$db = $is_local ? getenv('DB_NAME_LOCAL') : getenv('DB_NAME_SERVER');
-$user = $is_local ? getenv('DB_USERNAME_LOCAL') : getenv('DB_USERNAME_SERVER');
-$pass = $is_local ? getenv('DB_PASSWORD_LOCAL') : getenv('DB_PASSWORD_SERVER');
-$charset = $is_local ? getenv('DB_CHARSET_LOCAL') : getenv('DB_CHARSET');
+$host =  getenv('DB_HOST_LOCAL') : getenv('DB_HOST_SERVER') : "localhost"; 
+$db =  getenv('DB_NAME_SERVER') ? getenv('DB_NAME_SERVER') : "pharmasys_db";
+$user =  getenv('DB_USERNAME_SERVER') ? getenv('DB_USERNAME_SERVER') :"root"
+$pass = getenv('DB_PASSWORD_SERVER') ? getenv('DB_PASSWORD_SERVER') : "";
+$charset =  getenv('DB_CHARSET_LOCAL') : getenv('DB_CHARSET') : "utf8mb4";
 
 
 echo "<script>console.log('Database Name: " . $host . "');</script>";
@@ -28,7 +26,7 @@ $error = '';
 
 try {
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
-        var_dump([$connexion_string, $user, $pass, $options  ]);
+        var_dump($pass);
         $pdo = new PDO($connexion_string, $user, $pass, $options);
 
         $email = $_POST['email'];
