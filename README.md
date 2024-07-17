@@ -193,6 +193,8 @@ MySQL :
 `sudo apt install mysql-server`  
 `sudo mysql_secure_installation`
 PHP : `sudo apt install php-fpm`  
+`sudo apt install php libapache2-mod-php php-mysql -y`  
+`sudo systemctl restart apache2`  
 Git : `sudo apt install git` // then you need to be in this location /var/www/html and do : `git clone https://github.com/BigFootLime/B1.git`  
 you also need to give the good permission with `sudo chown -R $USER:$USER /var/www//html/pharmasys/B1`
 and you can check the status with `git status`
@@ -248,8 +250,38 @@ GRANT ALL PRIVILEGES ON pharmasys.db* TO 'admin'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;`
 
-### And now you can try your PHP file on your browser
+### Now we will need to use the DB export we did before and put in our server DB
 
-http://your_server_ip/phpinfo.php
+So for that we need to go in MySQL with `sudo mysql -u root -p` and do :
+`-p pharmasys_db < /var/www/html/B1/pharmasys_db.sql`
 
-### You will also need to put the good
+### Configuration files
+
+For that part we will just copy the default conf files and add our setting :  
+`sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/pharmasys.conf `  
+Now you need to go in our .conf files (with `sudo nano`) and add this setting :
+
+`` <VirtualHost \*:80>
+
+        ServerAdmin webmaster@localhost
+        ServerName pharmasys.store
+        ServerAlias 84.235.228.146
+        DocumentRoot /var/www/html/pharmasys/B1/src
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combine
+
+        RewriteEngine on
+        RewriteCond %{SERVER_NAME} =84.235.228.146 [OR]
+        RewriteCond %{SERVER_NAME} =www.pharmasys.store
+        RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+
+</VirtualHost>
+
+When it's done you need to activate this files with this commande :  
+`sudo a2ensite pharmasys.conf`  
+And also desactivate the default one :  
+`sudo a2dissite 000-default.conf`  
+Now we test and reboot :  
+`sudo apache2ctl configtest
+sudo systemctl restart apache2`
