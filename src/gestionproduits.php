@@ -1,9 +1,11 @@
 <?php
-$host = '127.0.0.1';
-$db = 'pharmasys_db';
-$user = 'root';
-$pass = '';
-$charset = 'utf8mb4';
+session_start();
+
+$host = $_SERVER['SERVER_NAME'] === 'localhost' ? $_ENV['DB_HOST'] : $_ENV['DB_HOST_SERVER'];
+$db = $_SERVER['SERVER_NAME'] === 'localhost' ? $_ENV['DB_NAME'] : $_ENV['DB_NAME_SERVER'];
+$user = $_SERVER['SERVER_NAME'] === 'localhost' ? $_ENV['DB_USERNAME'] : $_ENV['DB_USERNAME_SERVER'];
+$pass = $_SERVER['SERVER_NAME'] === 'localhost' ? $_ENV['DB_PASSWORD'] : $_ENV['DB_PASSWORD_SERVER'];
+$charset = $_ENV['DB_CHARSET'];
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 $options = [
@@ -59,6 +61,7 @@ try {
     throw new PDOException($e->getMessage(), (int)$e->getCode());
 }
 ?>
+
 <!------------------------------PHP CODE SECTION END------------------------------------>
 <!DOCTYPE html>
 <html lang="en">

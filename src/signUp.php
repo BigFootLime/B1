@@ -3,11 +3,14 @@
 </head>
 
 <?php
-$host = '127.0.0.1';
-$db   = 'pharmasys_db';
-$user = 'root';
-$pass = '';
-$charset = 'utf8mb4';
+session_start();
+
+// Get environment variables
+$host = $_SERVER['SERVER_NAME'] === 'localhost' ? $_ENV['DB_HOST'] : $_ENV['DB_HOST_SERVER'];
+$db = $_SERVER['SERVER_NAME'] === 'localhost' ? $_ENV['DB_NAME'] : $_ENV['DB_NAME_SERVER'];
+$user = $_SERVER['SERVER_NAME'] === 'localhost' ? $_ENV['DB_USERNAME'] : $_ENV['DB_USERNAME_SERVER'];
+$pass = $_SERVER['SERVER_NAME'] === 'localhost' ? $_ENV['DB_PASSWORD'] : $_ENV['DB_PASSWORD_SERVER'];
+$charset = $_ENV['DB_CHARSET'];
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 $options = [
@@ -16,30 +19,31 @@ $options = [
     PDO::ATTR_EMULATE_PREPARES   => false,
 ];
 
+$errors = [];
 
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 
-        // vérifie que les donnée on bien été renseigner (le message reste temps qu'il n'y a pas de données)
+    // Check if form data is submitted
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
         $prenom = $_POST['prenom'];
         $nom = $_POST['nom'];
         $email = $_POST['email'];
         $password = $_POST['mdp'];
 
-        // Check tif the length is good
+        // Validate input data
         if (strlen($prenom) < 2) $errors['prenom'] = "Le prénom doit contenir au moins 2 lettres.";
         if (strlen($nom) < 2) $errors['nom'] = "Le nom doit contenir au moins 2 lettres.";
 
-        // Check if the mail is not already taken
+        // Check if email is already taken
         $stmt = $pdo->prepare("SELECT COUNT(*) FROM utilisateur WHERE mail = :email");
         $stmt->execute(['email' => $email]);
         if ($stmt->fetchColumn() > 0) $errors['email'] = "L'email est déjà utilisé.";
 
-        // Check if the length of the pwd is good
+        // Validate password length
         if (strlen($password) < 10) $errors['mdp'] = "Le mot de passe doit contenir au moins 10 caractères.";
 
-        // if there is no error, we can put everything in the DB
+        // If no errors, insert data into database
         if (empty($errors)) {
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
             $sql = "INSERT INTO utilisateur (prenom, nom, mail, password) VALUES (:prenom, :nom, :mail, :password)";

@@ -1,10 +1,11 @@
 <?php
 
-$host = '127.0.0.1';
-$db   = 'pharmasys_db';
-$user = 'root';
-$pass = '';
-$charset = 'utf8mb4';
+session_start();
+$host = $_SERVER['SERVER_NAME'] === 'localhost' ? $_ENV['DB_HOST'] : $_ENV['DB_HOST_SERVER'];
+$db = $_SERVER['SERVER_NAME'] === 'localhost' ? $_ENV['DB_NAME'] : $_ENV['DB_NAME_SERVER'];
+$user = $_SERVER['SERVER_NAME'] === 'localhost' ? $_ENV['DB_USERNAME'] : $_ENV['DB_USERNAME_SERVER'];
+$pass = $_SERVER['SERVER_NAME'] === 'localhost' ? $_ENV['DB_PASSWORD'] : $_ENV['DB_PASSWORD_SERVER'];
+$charset = $_ENV['DB_CHARSET'];
 
 $connexion_string = "mysql:host=$host;dbname=$db;charset=$charset";
 
@@ -14,7 +15,7 @@ $options = [
     PDO::ATTR_EMULATE_PREPARES   => false,
 ];
 
-$error = ''; 
+$error = '';
 
 try {
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
@@ -23,16 +24,18 @@ try {
         $email = $_POST['email'];
         $password = $_POST['password'];
 
+     
         $stmt = $pdo->prepare("SELECT * FROM utilisateur WHERE mail = :email");
         $stmt->execute(['email' => $email]);
         $userfound = $stmt->fetch();
 
+      
         if ($userfound && password_verify($password, $userfound['password'])) {
             $_SESSION['user'] = $userfound['id'];
             header('Location: accueil.php');
             exit;
         } else {
-            $error = 'identifiant incorrecte';
+            $error = 'Identifiants incorrects';
         }
     }
 } catch (\PDOException $e) {

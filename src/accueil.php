@@ -80,35 +80,41 @@
     </script>
      <!-- **************************************************SIDEBAR END*********************************************************************** -->
      <!-- **************************************************RECUPERATION DONNEES*********************************************************************** -->
-    <?php
-    $host = '127.0.0.1';
-    $db   = 'pharmasys_db';
-    $user = 'root';
-    $pass = '';
-    $charset = 'utf8mb4';
-    
-    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-    $options = [
-        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::ATTR_EMULATE_PREPARES   => false,
-    ];
-    
-    try {
-      // Se connecter à la base de données
-        $pdo = new PDO($dsn, $user, $pass, $options);
-        
-        // Récupérer toutes les données
-        $in_stock = $pdo->query("SELECT name, quantity FROM medicaments WHERE quantity > 0")->fetchAll();
-        $out_of_stock = $pdo->query("SELECT name, quantity FROM medicaments WHERE quantity <= 0")->fetchAll();
-        $most_sold = $pdo->query("SELECT name, sold FROM medicaments ORDER BY sold DESC LIMIT 5")->fetchAll();
-        $least_sold = $pdo->query("SELECT name, sold FROM medicaments ORDER BY sold ASC LIMIT 5")->fetchAll();
-        $low_stock = $pdo->query("SELECT name, quantity FROM medicaments WHERE quantity < 30")->fetchAll();
-    
-    } catch (\PDOException $e) {
-        throw new \PDOException($e->getMessage(), (int)$e->getCode());
-    }
+     <?php
+
+$host = getenv('DB_HOST_SERVER');
+$db   = 'pharmasys_db';
+$user = 'root';
+$pass = '';
+$charset = 'utf8mb4';
+
+        $host ='' ? getenv('DB_HOST') : getenv('DB_HOST_SERVER');
+        $dbname = $_SERVER['SERVER_NAME'] === 'localhost' ? getenv('DB_NAME') : getenv('DB_NAME_SERVER');
+        $user = $_SERVER['SERVER_NAME'] === 'localhost' ? getenv('DB_USERNAME') : getenv('DB_USERNAME_SERVER');
+        $password = $_SERVER['SERVER_NAME'] === 'localhost' ? getenv('DB_PASSWORD') : getenv('DB_PASSWORD_SERVER');
+        $charset = getenv('DB_CHARSET');
+
+        $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
+        $options = [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES   => false,
+        ];
+
+        try {
+            $pdo = new PDO($dsn, $user, $password, $options);
+            
+            $in_stock = $pdo->query("SELECT name, quantity FROM medicaments WHERE quantity > 0")->fetchAll();
+            $out_of_stock = $pdo->query("SELECT name, quantity FROM medicaments WHERE quantity <= 0")->fetchAll();
+            $most_sold = $pdo->query("SELECT name, sold FROM medicaments ORDER BY sold DESC LIMIT 5")->fetchAll();
+            $least_sold = $pdo->query("SELECT name, sold FROM medicaments ORDER BY sold ASC LIMIT 5")->fetchAll();
+            $low_stock = $pdo->query("SELECT name, quantity FROM medicaments WHERE quantity < 30")->fetchAll();
+
+        } catch (\PDOException $e) {
+            throw new \PDOException($e->getMessage(), (int)$e->getCode());
+        }
     ?>
+
      <!-- **************************************************END RECUPERATION DONNEES*********************************************************************** -->
   <!-- **************************************************TABLEAU 1*********************************************************************** -->
   <div class="mx-auto flex max-w-2xl flex-col gap-16 bg-white/5 px-6 py-16 ring-1 ring-white/10 sm:rounded-3xl sm:p-8 lg:mx-0 lg:max-w-none lg:items-center  xl:gap-x-20 xl:px-20 font-poppins">
