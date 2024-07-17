@@ -9,7 +9,12 @@ $pass = $is_local ? getenv('DB_PASSWORD_LOCAL') : getenv('DB_PASSWORD_SERVER');
 $charset = $is_local ? getenv('DB_CHARSET_LOCAL') : getenv('DB_CHARSET');
 
 
+echo "<script>console.log('Database Name: " . $host . "');</script>";
 echo "<script>console.log('Database Name: " . $user . "');</script>";
+echo "<script>console.log('Database Name: " . $db . "');</script>";
+echo "<script>console.log('Database Name: " . $pass . "');</script>";
+echo "<script>console.log('Database Name: " . $charset . "');</script>";
+echo "<script>console.log('Database Name: " . $server_name . "');</script>";
 
 $connexion_string = "mysql:host=$host;dbname=$db;charset=$charset";
 
