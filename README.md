@@ -164,7 +164,7 @@ retain the value entered by the user
 
 When we login correctly, with the correct information, we can direclty access the 'acccueil.php' page\
 
-Once on the dashboard, a few charts appear explaining the current stock amount for each product, the products currently out of stock and the most sold items. Just hover over the charts and information will display.
+Once on the dashboard, a few charts appear explaining the current stock amount for each product, the products currently out of stock and the most sold items. Just hover over the charts and information will display.  
 **Take a look :**\
 ![](./src/assets/dashboardImg.png)
 To do this, i used a plugin called Chart.js. To display the info from the database I had to retrieve the info using PHP and then use json_encode to convert the info into a string and therefore displaying it in Javascript.
@@ -189,7 +189,66 @@ then you nee to do a `sudo apt update && upgrade` you can also, if you want, ins
 
 Now you need to install Apache, MySQL, PHP and Git :
 apache : `sudo apt install apache2 `  
-MySQL : `sudo apt install mysql-server`  
+MySQL :  
+`sudo apt install mysql-server`  
+`sudo mysql_secure_installation`
 PHP : `sudo apt install php-fpm`  
-Git : `sudo apt install git` // `git clone https://github.com/BigFootLime/B1.git`  
+Git : `sudo apt install git` // then you need to be in this location /var/www/html and do : `git clone https://github.com/BigFootLime/B1.git`
 and you can check the status with `git status`
+
+### We also need to start Apache2
+
+`sudo systemctl start apache2`  
+`sudo systemctl enable apache2`  
+`sudo systemctl restart apache2`
+
+### After that we need to uptade the fireWall setting :
+
+```sh
+sudo apt -y install ufw
+sudo ufw allow 'Apache'
+sudo ufw allow '80'
+sudo ufw allow 'OpenSSH'
+sudo ufw enable
+sudo ufw status
+sudo ufw reload
+```
+
+```sh
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 80 -j ACCEPT
+sudo netfilter-persistent save
+```
+
+### Then we can create a PHP file
+
+```sh
+sudo vi /var/www/html/info.php
+```
+
+```php
+<?php
+phpinfo();
+?>
+```
+
+### And now we just have to restart apache2
+
+`sudo systemctl restart apache2`
+
+### Wa also need to change and do some setting for the MySQL server
+
+First we need to connect with MySQL
+`sudo mysql -u root -p`
+then we create the DB like we did in phpMyadmin
+`CREATE DATABASE pharmasys.db;`
+After we create a user with his privileges
+`CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';
+GRANT ALL PRIVILEGES ON pharmasys.db* TO 'admin'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;`
+
+### And now you can try your PHP file on your browser
+
+http://your_server_ip/phpinfo.php
+
+### You will also need to put the good
