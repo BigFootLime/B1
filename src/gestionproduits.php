@@ -50,6 +50,29 @@ try {
         }
     }
 
+    if (isset($_POST['add'])) {
+        $name = $_POST['add_name'];
+        $description = $_POST['add_description'];
+        $price = $_POST['add_price'];
+        $expire_date = $_POST['add_expire_date'];
+        $form = $_POST['add_form'];
+        $manufacturer = $_POST['add_manufacturer'];
+        $quantity = $_POST['add_quantity'];
+        $sold = $_POST['add_sold'];
+        $img_path = $_POST['add_img_path'];
+    
+        $sql = "INSERT INTO medicaments (name, description, price, expire_date, form, manufacturer, quantity, sold, img_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $pdo->prepare($sql);
+        if ($stmt->execute([$name, $description, $price, $expire_date, $form, $manufacturer, $quantity, $sold, $img_path])) {
+            echo "<script>alert('Product added successfully');</script>";
+            echo "<script>window.location.href = window.location.href;</script>";
+            exit;
+        } else {
+            echo "<script>alert('Error adding product');</script>";
+        }
+    }
+    
+
     $sql = "SELECT img_path, name, description, expire_date, form, manufacturer, price, quantity, sold, id FROM medicaments";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
@@ -135,90 +158,134 @@ try {
    
     <!-------------------------------------------------------------------DASHBOARD END ------------------------------------------------------------------------------------>
     <!----------------------------------------------------------------TABLE---------------------------------------------------------------------------------->
-    <div class="px-4 sm:px-6 lg:px-8">
+    <div class="px-4 sm:px-6 lg:py-4 lg:px-8">
   <div class="sm:flex sm:items-center">
     <div class="sm:flex-auto">
-      <h1 class="text-base font-semibold leading-6 mt-6 justify-center items-center flex flex-col lg:pl-20 text-gray-50">Products</h1>
-      <p class="mt-2 text-sm text-gray-700">All products displayed below can only be sold with a valid pescription .</p>
+      <h1 class="text-base font-semibold leading-6 text-gray-900">Products</h1>
+      <p class="mt-2 pl-8 text-sm text-gray-400">All products displayed below can only be sold with a valid prescription.</p>
     </div>
     <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-      <button type="button" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add Product</button>
+      <button id="addbtn" type="button" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">Add Product</button>
     </div>
   </div>
   <div class="-mx-4 mt-8 sm:-mx-0">
-    <table class="min-w-full divide-y divide-gray-300">
-      <thead>
+    <table class="min-w-full divide-y divide-gray-300 bg-gray-50 rounded-lg">
+      <thead class="hidden sm:table-header-group">
         <tr>
-          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-50 sm:pl-0">Photo</th>
-          <th scope="col" class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-50 lg:table-cell">Name</th>
-          <th scope="col" class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-50 sm:table-cell">Description</th>
-          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-50">Price</th>
-          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-50">Expire Date</th>
-          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-50">Form</th>
-          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-50">Manufacturer</th>
-          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-50">Quantity</th>
-          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-50">Sold</th>
+          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Photo</th>
+          <th scope="col" class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">Name</th>
+          <th scope="col" class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell">Description</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Price</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Expire Date</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Form</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Manufacturer</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Quantity</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Sold</th>
           <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
             <span class="sr-only">Actions</span>
           </th>
-        
         </tr>
       </thead>
-      <tbody class="divide-y divide-gray-200 bg-white">
-    <?php
-    if (!empty($result)) {
-        foreach ($result as $row) {
-            echo "<tr>";
-            echo "<td class='w-full max-w-full py-4 pl-4 pr-3 text-sm font-medium text-gray-50 sm:w-auto sm:max-w-none sm:pl-0'>";
-            echo "<img src='" . $row["img_path"] . "' class='w-16 md:w-32 max-w-full max-h-full' alt='Product Image'>";
-            echo "<dl class='font-normal lg:hidden'>";
-            echo "<dt class='sr-only'>Name</dt>";
-            echo "<dd class='mt-1 truncate text-gray-700'>" . $row["name"] . "</dd>";
-            echo "<dt class='sr-only sm:hidden'>Description</dt>";
-            echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>" . $row["description"] . "</dd>";
-            echo "<dt class='sr-only sm:hidden'>Price</dt>";
-            echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>$" . $row["price"] . "</dd>";
-            echo "<dt class='sr-only sm:hidden'>Expire Date</dt>";
-            echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>" . $row["expire_date"] . "</dd>";
-            echo "<dt class='sr-only md:hidden'>Form</dt>";
-            echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>" . $row["form"] . "</dd>";
-            echo "<dt class='sr-only sm:hidden'>Manufacturer</dt>";
-            echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>" . $row["manufacturer"] . "</dd>";
-            echo "<dt class='sr-only sm:hidden'>Quantity</dt>";
-            echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>" . $row["quantity"] . "</dd>";
-            echo "<dt class='sr-only sm:hidden'>Sold</dt>";
-            echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>" . $row["sold"] . "</dd>";
-            echo "</dl>";
-            echo "</td>";
-            echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["name"] . "</td>";
-            echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["description"] . "</td>";
-            echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>$" . $row["price"] . "</td>";
-            echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["expire_date"] . "</td>";
-            echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["form"] . "</td>";
-            echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["manufacturer"] . "</td>";
-            echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["quantity"] . "</td>";
-            echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["sold"] . "</td>";
-            echo "<td class='py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0'>";
-            echo "<form method='post' action='' class='inline'>";
-            echo "<input type='hidden' name='delete_id' value='" . $row["id"] . "'>";
-            echo "<button type='submit' name='delete' class='text-red-600 hover:text-red-900'>Remove</button>";
-            echo "</form>";
-            echo "<button type='button' class='ml-2 text-indigo-600 hover:text-indigo-900' onclick='showEditForm(" . json_encode($row) . ")'>Modify</button>";
-            echo "</td>";
-            echo "</tr>";
+      <tbody class="divide-y divide-gray-200 bg-white bg-opacity-10 ">
+        <?php
+        if (!empty($result)) {
+            foreach ($result as $row) {
+                echo "<tr>";
+                echo "<td class='w-full max-w-full py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-0'>";
+                echo "<img src='" . $row["img_path"] . "' class='w-16 md:w-32 max-w-full max-h-full' alt='Product Image'>";
+                echo "<dl class='font-normal lg:hidden'>";
+                echo "<dt class='sr-only'>Name</dt>";
+                echo "<dd class='mt-1 truncate text-gray-700'>" . $row["name"] . "</dd>";
+                echo "<dt class='sr-only sm:hidden'>Description</dt>";
+                echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>" . $row["description"] . "</dd>";
+                echo "<dt class='sr-only sm:hidden'>Price</dt>";
+                echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>$" . $row["price"] . "</dd>";
+                echo "<dt class='sr-only sm:hidden'>Expire Date</dt>";
+                echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>" . $row["expire_date"] . "</dd>";
+                echo "<dt class='sr-only md:hidden'>Form</dt>";
+                echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>" . $row["form"] . "</dd>";
+                echo "<dt class='sr-only sm:hidden'>Manufacturer</dt>";
+                echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>" . $row["manufacturer"] . "</dd>";
+                echo "<dt class='sr-only sm:hidden'>Quantity</dt>";
+                echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>" . $row["quantity"] . "</dd>";
+                echo "<dt class='sr-only sm:hidden'>Sold</dt>";
+                echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>" . $row["sold"] . "</dd>";
+                echo "</dl>";
+                echo "</td>";
+                echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["name"] . "</td>";
+                echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["description"] . "</td>";
+                echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>$" . $row["price"] . "</td>";
+                echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["expire_date"] . "</td>";
+                echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["form"] . "</td>";
+                echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["manufacturer"] . "</td>";
+                echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["quantity"] . "</td>";
+                echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["sold"] . "</td>";
+                echo "<td class='py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0'>";
+                echo "<form method='post' action='' class='inline'>";
+                echo "<input type='hidden' name='delete_id' value='" . $row["id"] . "'>";
+                echo "<button type='submit' name='delete' class='text-red-600 hover:text-red-900'>Remove</button>";
+                echo "</form>";
+                echo "<button type='button' class='ml-2 text-indigo-600 hover:text-indigo-900' onclick='showEditForm(" . json_encode($row) . ")'>Modify</button>";
+                echo "</td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='10' class='px-6 py-4 text-center font-semibold text-gray-900'>No data found</td></tr>";
         }
-    } else {
-        echo "<tr><td colspan='10' class='px-6 py-4 text-center font-semibold text-gray-900'>No data found</td></tr>";
-    }
-    ?>
-</tbody>
-
+        ?>
+      </tbody>
     </table>
   </div>
 </div>
 
 
+<!-------------------------------------------------------------------TABLE END ------------------------------------------------------------------------------------>
+<!-------------------------------------------------------------------ADD FORM------------------------------------------------------------------------------------>
+<div id="add-form-container" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+    <form method="post" action="" class="bg-white p-6 rounded-lg w-full md:w-[50%]">
+        <div class="mb-4">
+            <label for="add_name" class="block text-gray-700">Name</label>
+            <input type="text" name="add_name" id="add_name" class="w-full p-2 border border-gray-300 rounded mt-1">
+        </div>
+        <div class="mb-4">
+            <label for="add_description" class="block text-gray-700">Description</label>
+            <textarea name="add_description" id="add_description" class="w-full p-2 border border-gray-300 rounded mt-1"></textarea>
+        </div>
+        <div class="mb-4">
+            <label for="add_price" class="block text-gray-700">Price</label>
+            <input type="text" name="add_price" id="add_price" class="w-full p-2 border border-gray-300 rounded mt-1">
+        </div>
+        <div class="mb-4">
+            <label for="add_expire_date" class="block text-gray-700">Expire Date</label>
+            <input type="date" name="add_expire_date" id="add_expire_date" class="w-full p-2 border border-gray-300 rounded mt-1">
+        </div>
+        <div class="mb-4">
+            <label for="add_form" class="block text-gray-700">Form</label>
+            <input type="text" name="add_form" id="add_form" class="w-full p-2 border border-gray-300 rounded mt-1">
+        </div>
+        <div class="mb-4">
+            <label for="add_manufacturer" class="block text-gray-700">Manufacturer</label>
+            <input type="text" name="add_manufacturer" id="add_manufacturer" class="w-full p-2 border border-gray-300 rounded mt-1">
+        </div>
+        <div class="mb-4">
+            <label for="add_quantity" class="block text-gray-700">Quantity</label>
+            <input type="text" name="add_quantity" id="add_quantity" class="w-full p-2 border border-gray-300 rounded mt-1">
+        </div>
+        <div class="mb-4">
+            <label for="add_sold" class="block text-gray-700">Sold</label>
+            <input type="text" name="add_sold" id="add_sold" class="w-full p-2 border border-gray-300 rounded mt-1">
+        </div>
+        <div class="mb-4">
+            <label for="add_img_path" class="block text-gray-700">Image Path</label>
+            <input type="text" name="add_img_path" id="add_img_path" class="w-full p-2 border border-gray-300 rounded mt-1">
+        </div>
+        <button type="submit" name="add" class="bg-blue-500 text-white p-2 rounded">Add Product</button>
+        <button type="button" class="bg-gray-500 text-white p-2 rounded" onclick="hideAddForm()">Cancel</button>
+    </form>
+</div>
+<!-------------------------------------------------------------------ADD FORM END------------------------------------------------------------------------------------>
 
+<!-------------------------------------------------------------------EDIT FORM------------------------------------------------------------------------------------>
     <div id="edit-form-container" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
         <form method="post" action="" class="bg-white p-6 rounded-lg w-full md:w-[50%]">
             <input type="hidden" name="update_id" id="update_id">
@@ -258,6 +325,7 @@ try {
             <button type="button" class="bg-gray-500 text-white p-2 rounded" onclick="hideEditForm()">Cancel</button>
         </form>
     </div>
+<!-------------------------------------------------------------------EDIT FORM END------------------------------------------------------------------------------------>
 
     <script>
         document.getElementById('drawer-button').addEventListener('click', function() {
@@ -267,6 +335,14 @@ try {
         document.getElementById('close-drawer').addEventListener('click', function() {
             document.getElementById('drawer-navigation').classList.add('-translate-x-full');
         });
+
+        document.getElementById('addbtn').addEventListener('click', function() {
+            document.getElementById('add-form-container').classList.remove('hidden');
+        });
+
+        function hideAddForm() {
+            document.getElementById('add-form-container').classList.add('hidden');
+        }
 
         function showEditForm(data) {
             document.getElementById('update_id').value = data.id;
