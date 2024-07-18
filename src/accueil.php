@@ -19,9 +19,9 @@
             z-index: 100;
         }
     </style>
- <!-- **************************************************SIDEBAR*********************************************************************** TEST -->
+ <!-- **************************************************SIDEBAR*********************************************************************** -->
 <body class="relative bg-gray-900 isolate font-poppins overflow-hidden">
-<div class="absolute inset-x-0 top-4 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl" aria-hidden="true">
+<div class="absolute inset-x-0 top-4 -z-20 flex transform-gpu justify-center overflow-hidden blur-3xl" aria-hidden="true">
       <div class="aspect-[1108/632] w-full flex-none bg-gradient-to-r from-[#80caff] to-[#4f46e5] opacity-25" style="clip-path: polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)"></div>
     </div>
     <div class="text-center py-2 font-poppins absolute left-2">
@@ -50,21 +50,21 @@
                     </a>
                 </li>
                 <li>
-                    <a href="./gestionproduits.php" class="flex items-center p-2 text-gray-100 rounded-lg dark:text-white hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <a href="./gestionproduits.php" class="flex items-center p-2 text-gray-100 rounded-lg dark:text-white hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-[#1c1a47] group">
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
                             <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z"/>
                         </svg>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Product Management</span>
+                        <span class="flex-1 text-white ms-3 whitespace-nowrap">Product Management</span>
                        
                     </a>
                 </li>
                 
                 <li>
-                    <a href="./login.php" class="flex items-center p-2 text-gray-100 rounded-lg dark:text-white hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <a href="./login.php" class="flex items-center p-2 text-gray-100 rounded-lg dark:text-white hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-[#1c1a47] group">
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/>
                         </svg>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Logout</span>
+                        <span class="flex-1 text-white ms-3 whitespace-nowrap">Logout</span>
                     </a>
                 </li>
                 
