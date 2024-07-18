@@ -61,7 +61,7 @@ try {
   <div class="sm:mx-auto sm:w-full sm:max-w-md">
   <img class="mx-auto h-28 w-auto" src="./assets/LOGOPHARMASYS.png" alt="NoImage">
   <div class="flex flex-center flex-col justify-center">
-    <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-50">Connectez vous à votre compte</h2>
+    <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-50">Sign In</h2>
     <?php if ($error): ?>
             <p class="text-red-500 font-bold mt-4 text-center"><?= htmlspecialchars($error) ?></p>
         <?php endif; ?>
@@ -86,10 +86,6 @@ try {
         </div>
 
         <div class="flex items-center justify-between mb-4">
-          <!-- <div class="flex items-center">
-            <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
-            <label for="remember-me" class="ml-3 block text-sm leading-6 text-gray-900">Remember me</label>
-          </div> -->
 
           <div class="text-sm leading-6">
             <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
@@ -106,8 +102,8 @@ try {
 
     <form class="formtrans" method="post" action="signUp.php">
     <p class="mt-10 text-center text-sm text-gray-400">
-      Vous n'avez pas de Compte?
-      <button class="font-semibold leading-6 text-indigo-400 hover:text-indigo-300">Creez en un !</button>
+      Dosen't have any account ?
+      <button class="font-semibold leading-6 text-indigo-400 hover:text-indigo-300">Create One !</button>
     </p>
     </form>
   </div>

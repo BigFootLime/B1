@@ -6,6 +6,18 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
+<style> 
+h3 {
+text-align : center;
+color : #DCDCDC;
+font-weight: bold !important;
+font-size : 40px !important; 
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+}
+</style>
 
 <?php
 session_start();
@@ -56,9 +68,10 @@ try {
             $stmt = $pdo->prepare($sql);
             $stmt->execute(['prenom' => $prenom, 'nom' => $nom, 'mail' => $email, 'password' => $passwordHash]);
 
-            echo "<h3>Inscription réussie ! Vous allez être redirigé d'ici quelques secondes...</h3>";
+            echo "<h3>Successful registration! You will be redirected in a few seconds...</h3>";
             header('Refresh: 3; URL=login.php');
-        }
+
+         }
     } else {
         
     }
@@ -76,7 +89,7 @@ try {
   <div class="sm:mx-auto sm:w-full sm:max-w-md">
   <img class="mx-auto h-20 w-auto" src="../src/assets/LOGOPHARMASYS.png" alt="NoImage">
   <div class="flex flex-center flex-col justify-center">
-    <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-50">Créer votre compte</h2>
+    <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-50">Sign Up</h2>
     </div>
   </div>
 
@@ -84,7 +97,7 @@ try {
     <div class="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
       <form class="space-y-6 gap-y-4" action="#" method="POST">
         <div class="mb-4">
-          <label for="prenom" class="block text-sm font-medium leading-6 text-gray-900">Prénom</label>
+          <label for="prenom" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
           <div class="mt-2">
             <input id="prenom" value="<?= htmlspecialchars(isset($prenom) ? $prenom : '') ?>" name="prenom" type="text" autocomplete="text" required class="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             <?php if (isset($errors['prenom'])): ?>
@@ -94,7 +107,7 @@ try {
         </div>
 
         <div class="mb-4">
-          <label for="nom" class="block text-sm font-medium leading-6 text-gray-900">Nom</label>
+          <label for="nom" class="block text-sm font-medium leading-6 text-gray-900">Surname</label>
           <div class="mt-2">
             <input id="nom" value="<?= htmlspecialchars(isset($nom) ? $nom : '') ?>" name="nom" type="text" autocomplete="text" required class="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             <?php if (isset($errors['nom'])): ?>
@@ -104,7 +117,7 @@ try {
         </div>
 
         <div class="mb-4">
-          <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Adresse Email</label>
+          <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email Address</label>
           <div class="mt-2">
             <input id="email" value="<?= htmlspecialchars(isset($email) ? $email : '') ?>" name="email" type="email" autocomplete="email" required class="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             <?php if (isset($errors['email'])): ?>
@@ -114,7 +127,7 @@ try {
         </div>
 
         <div class="mb-4">
-          <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Mot de passe</label>
+          <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
           <div class="mt-2">
             <input id="mdp" name="mdp" type="password" autocomplete="current-password" required class="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             <?php if (isset($errors['mdp'])): ?>
