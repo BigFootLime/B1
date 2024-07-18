@@ -160,6 +160,10 @@ retain the value entered by the user
 
 <!-- a Keenan d'expliquer ce que lui a fait-->
 
+### Sidebar
+
+On each page, once logged in, the user has access to a sidebar that has been created with tailwind css, it allows the user to navigate throughout the application.
+
 ## Explanation php Dashboard and Product Management
 
 When we login correctly, with the correct information, we can direclty access the 'acccueil.php' page\
@@ -169,9 +173,9 @@ Once on the dashboard, a few charts appear explaining the current stock amount f
 ![](./src/assets/dashboardImg.png)
 To do this, i used a plugin called Chart.js. To display the info from the database I had to retrieve the info using PHP and then use json_encode to convert the info into a string and therefore displaying it in Javascript.
 
-### Dashboard
+In the Product management page, users can modify products, add products, and delete them. The users are presented with a table with images of each product, the quantity in stock, and all the relevant information concerning the products. With a click of a button, the users have total control over the products
 
-Let's take a look to the 'dashboard' code,
+In the php code, we have made use of environment variables to be able to switch between the local database on our personal Laptops, and the server's database.
 
 ### Creation of the Deployment server
 
