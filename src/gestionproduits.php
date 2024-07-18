@@ -132,66 +132,92 @@ try {
         </div>
     </div>
 
-    <script>
-        // Open and close the sidebar with the ref to the bars button
-        document.getElementById('drawer-button').addEventListener('click', function() {
-            document.getElementById('drawer-navigation').classList.toggle('-translate-x-full');
-        });
-
-        document.getElementById('close-drawer').addEventListener('click', function() {
-            document.getElementById('drawer-navigation').classList.add('-translate-x-full');
-        });
-    </script>
+   
     <!-------------------------------------------------------------------DASHBOARD END ------------------------------------------------------------------------------------>
     <!----------------------------------------------------------------TABLE---------------------------------------------------------------------------------->
-    <div class=" font-poppins relative overflow-x-auto shadow-md sm:rounded-lg px-12 mt-10 lg:mx-0">
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 sm:rounded-lg">
-            <thead class="text-lg text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" class="px-6 py-3">Photo</th>
-                    <th scope="col" class="px-6 py-3">Name</th>
-                    <th scope="col" class="px-6 py-3">Description</th>
-                    <th scope="col" class="px-6 py-3">Price</th>
-                    <th scope="col" class="px-6 py-3">Expire Date</th>
-                    <th scope="col" class="px-6 py-3">Form</th>
-                    <th scope="col" class="px-6 py-3">Manufacturer</th>
-                    <th scope="col" class="px-6 py-3">Quantity</th>
-                    <th scope="col" class="px-6 py-3">Sold</th>
-                    <th scope="col" class="px-6 py-3">Actions</th>
-
-                </tr>
-            </thead>
-            <tbody>
+    <div class="px-4 sm:px-6 lg:px-8">
+  <div class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <h1 class="text-base font-semibold leading-6 mt-6 justify-center items-center flex flex-col lg:pl-20 text-gray-50">Products</h1>
+      <p class="mt-2 text-sm text-gray-700">All products displayed below can only be sold with a valid pescription .</p>
+    </div>
+    <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+      <button type="button" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add Product</button>
+    </div>
+  </div>
+  <div class="-mx-4 mt-8 sm:-mx-0">
+    <table class="min-w-full divide-y divide-gray-300">
+      <thead>
+        <tr>
+          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-50 sm:pl-0">Photo</th>
+          <th scope="col" class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-50 lg:table-cell">Name</th>
+          <th scope="col" class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-50 sm:table-cell">Description</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-50">Price</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-50">Expire Date</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-50">Form</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-50">Manufacturer</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-50">Quantity</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-50">Sold</th>
+          <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
+            <span class="sr-only">Actions</span>
+          </th>
+        
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200 bg-white">
     <?php
     if (!empty($result)) {
         foreach ($result as $row) {
-            echo "<tr class='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>";
-            echo "<td class='p-4'><img src='" . $row["img_path"] . "' class='w-16 md:w-32 max-w-full max-h-full' alt='Product Image'></td>";
-            echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["name"] . "</td>";
-            echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["description"] . "</td>";
-            echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>$" . $row["price"] . "</td>";
-            echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["expire_date"] . "</td>";
-            echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["form"] . "</td>";
-            echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["manufacturer"] . "</td>";
-            echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["quantity"] . "</td>";
-            echo "<td class='px-6 py-4 font-semibold text-gray-900 dark:text-white'>" . $row["sold"] . "</td>";
-            echo "<td class='px-6 py-4 flex flex-row items-center'>
-                <form method='post' action=''>
-                    <input type='hidden' name='delete_id' value='" . $row["id"] . "'>
-                    <button type='submit' name='delete' class='font-medium mx-2 bg-red-600 sm:rounded-lg p-2 text-white dark:text-red-500 hover:underline'>Remove</button>
-                </form>
-                <button type='button' class='font-medium  bg-sky-600 sm:rounded-lg p-2 text-white dark:text-sky-500 hover:underline' onclick='showEditForm(" . json_encode($row) . ")'>Modify</button>
-            </td>";
+            echo "<tr>";
+            echo "<td class='w-full max-w-full py-4 pl-4 pr-3 text-sm font-medium text-gray-50 sm:w-auto sm:max-w-none sm:pl-0'>";
+            echo "<img src='" . $row["img_path"] . "' class='w-16 md:w-32 max-w-full max-h-full' alt='Product Image'>";
+            echo "<dl class='font-normal lg:hidden'>";
+            echo "<dt class='sr-only'>Name</dt>";
+            echo "<dd class='mt-1 truncate text-gray-700'>" . $row["name"] . "</dd>";
+            echo "<dt class='sr-only sm:hidden'>Description</dt>";
+            echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>" . $row["description"] . "</dd>";
+            echo "<dt class='sr-only sm:hidden'>Price</dt>";
+            echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>$" . $row["price"] . "</dd>";
+            echo "<dt class='sr-only sm:hidden'>Expire Date</dt>";
+            echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>" . $row["expire_date"] . "</dd>";
+            echo "<dt class='sr-only md:hidden'>Form</dt>";
+            echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>" . $row["form"] . "</dd>";
+            echo "<dt class='sr-only sm:hidden'>Manufacturer</dt>";
+            echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>" . $row["manufacturer"] . "</dd>";
+            echo "<dt class='sr-only sm:hidden'>Quantity</dt>";
+            echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>" . $row["quantity"] . "</dd>";
+            echo "<dt class='sr-only sm:hidden'>Sold</dt>";
+            echo "<dd class='mt-1 truncate text-gray-500 sm:hidden'>" . $row["sold"] . "</dd>";
+            echo "</dl>";
+            echo "</td>";
+            echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["name"] . "</td>";
+            echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["description"] . "</td>";
+            echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>$" . $row["price"] . "</td>";
+            echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["expire_date"] . "</td>";
+            echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["form"] . "</td>";
+            echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["manufacturer"] . "</td>";
+            echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["quantity"] . "</td>";
+            echo "<td class='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>" . $row["sold"] . "</td>";
+            echo "<td class='py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0'>";
+            echo "<form method='post' action='' class='inline'>";
+            echo "<input type='hidden' name='delete_id' value='" . $row["id"] . "'>";
+            echo "<button type='submit' name='delete' class='text-red-600 hover:text-red-900'>Remove</button>";
+            echo "</form>";
+            echo "<button type='button' class='ml-2 text-indigo-600 hover:text-indigo-900' onclick='showEditForm(" . json_encode($row) . ")'>Modify</button>";
+            echo "</td>";
             echo "</tr>";
         }
     } else {
-        echo "<tr><td colspan='10' class='px-6 py-4 text-center font-semibold text-gray-900 dark:text-white'>No data found</td></tr>";
+        echo "<tr><td colspan='10' class='px-6 py-4 text-center font-semibold text-gray-900'>No data found</td></tr>";
     }
     ?>
 </tbody>
 
-        </table>
-    </div>
+    </table>
+  </div>
+</div>
+
+
 
     <div id="edit-form-container" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
         <form method="post" action="" class="bg-white p-6 rounded-lg w-full md:w-[50%]">
