@@ -87,7 +87,7 @@ try {
 <form action="" method="POST">
 <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
   <div class="sm:mx-auto sm:w-full sm:max-w-md">
-  <img class="mx-auto h-20 w-auto" src="../src/assets/LOGOPHARMASYS.png" alt="NoImage">
+  <img class="mx-auto h-28 w-auto" src="./assets/LOGOPHARMASYS.png" alt="NoImage">
   <div class="flex flex-center flex-col justify-center">
     <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-50">Sign Up</h2>
     </div>
