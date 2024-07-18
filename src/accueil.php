@@ -115,19 +115,19 @@
     <h1 class="text-xl md:text-2xl font-bold mb-4 pt-4 text-white text-center">Dashboard</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <div class="bg-white p-4 rounded-lg shadow-md max-h-full md:row-span-2">
-            <h2 class="text-lg md:text-xl font-semibold mb-2 text-center">Produits en Stock</h2>
+            <h2 class="text-lg md:text-xl font-semibold mb-2 text-center">Products in Stock</h2>
             <div class="relative h-64 md:h-[70vh]">
                 <canvas id="inStockChart" class="w-full h-full"></canvas>
             </div>
         </div>
         <div class="bg-white p-4 rounded-lg shadow-md max-h-80">
-            <h2 class="text-lg md:text-xl font-semibold mb-2 text-center">Produits Vendus</h2>
+            <h2 class="text-lg md:text-xl font-semibold mb-2 text-center">Sold Products</h2>
             <div class="relative h-64">
                 <canvas id="mostSoldChart" class="w-full h-full"></canvas>
             </div>
         </div>
         <div class="bg-white p-4 rounded-lg shadow-md max-h-80">
-            <h2 class="text-lg md:text-xl font-semibold mb-2 text-center">Produits en rupture de Stock</h2>
+            <h2 class="text-lg md:text-xl font-semibold mb-2 text-center">Products out of Stock</h2>
             <div class="relative h-64">
                 <canvas id="noStockChart" class="w-full h-full"></canvas>
             </div>
@@ -175,7 +175,7 @@
             data: {
                 labels: stockLabels,
                 datasets: [{
-                    label: 'Quantité en Stock',
+                    label: 'Quantity in Stock',
                     data: stockValues,
                     backgroundColor: 'rgba(54, 162, 235, 0.6)',
                     borderColor: 'rgba(54, 162, 235, 1)',
@@ -200,7 +200,7 @@
             data: {
                 labels: mostSoldLabels,
                 datasets: [{
-                    label: 'Unités Vendues',
+                    label: 'Sold Products',
                     data: mostSoldValues,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.6)',
@@ -230,7 +230,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Produits les plus Vendus'
+                        text: 'Most Sold Products'
                     }
                 }
             }
@@ -242,7 +242,7 @@
             data: {
                 labels: lowStockLabels,
                 datasets: [{
-                    label: 'En rupture de Stock',
+                    label: 'Out of Stock',
                     data: lowStockValues,
                     backgroundColor: 'red',
                     borderColor: 'darkred',
