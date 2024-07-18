@@ -285,3 +285,7 @@ And also desactivate the default one :
 Now we test and reboot :  
 `sudo apache2ctl configtest
 sudo systemctl restart apache2`
+
+### Environment Variable
+
+Here we will need to declare our variable in our Ubuntu server
