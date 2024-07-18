@@ -264,8 +264,7 @@ EXIT;`
 
 ### Now we will need to use the DB export we did before and put in our server DB
 
-So for that we need to go in MySQL with `sudo mysql -u root -p` and do :
-`-p pharmasys_db < /var/www/html/B1/pharmasys_db.sql`
+So for that we need to do `pharmasys_db < /var/www/html/B1/pharmasys_db.sql`
 
 ### Configuration files
 
