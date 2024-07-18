@@ -51,6 +51,7 @@ try {
     }
 
     if (isset($_POST['add'])) {
+        $_id = $_POST['null'];
         $name = $_POST['add_name'];
         $description = $_POST['add_description'];
         $price = $_POST['add_price'];
@@ -61,9 +62,9 @@ try {
         $sold = $_POST['add_sold'];
         $img_path = $_POST['add_img_path'];
     
-        $sql = "INSERT INTO medicaments (name, description, price, expire_date, form, manufacturer, quantity, sold, img_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO medicaments (_id ,name, description, price, expire_date, form, manufacturer, quantity, sold, img_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
-        if ($stmt->execute([$name, $description, $price, $expire_date, $form, $manufacturer, $quantity, $sold, $img_path])) {
+        if ($stmt->execute([$_id, $name, $description, $price, $expire_date, $form, $manufacturer, $quantity, $sold, $img_path])) {
             echo "<script>alert('Product added successfully');</script>";
             echo "<script>window.location.href = window.location.href;</script>";
             exit;
