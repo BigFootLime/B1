@@ -24,6 +24,10 @@
 
 ## required element
 
+### Repo GitHub :
+
+https://github.com/BigFootLime/B1
+
 ### XAMPP
 
 XAMPP makes it easy to set up a development environment and a MySQL or MariaDB database.
@@ -179,25 +183,24 @@ In the php code, we have made use of environment variables to be able to switch 
 **Take a look :**\
 ![](./src/assets/codeENV-vars.png)
 
-### Creation of the Deployment server
+## Creation of the Deployment server
 
 first of all we will need to do the installation of OCI, we need to register and then create  
-a instance on it. the only setting to change is change the OS to the lastest ubuntu .iso  
+a instance on it. the only setting to change is the OS to the lastest ubuntu version (22.04)  
 and also save the private register key (you can also save the public one) then you will be able  
 to create and start the instance.
 
-when this is done, you will need to download PuTTY. lunch PuTTYgen and translate the private key  
-you download. Now you can lunch PuTTY, put the public IP adress of OCI and then in SSH / Auth / Credential  
-you will put the private key that we translate before.
+when this is done, you will need to download PuTTY. lunch PuTTYgen and translate the private key that you downloaded as .ppk. Now you can lunch PuTTY, put the public IP adress of OCI and then in SSH / Auth / Credential  
+you will put the private key that we translated before.
 
-now you are able to connect on it. when you open your Ubuntu server, the username is 'ubuntu'  
+now you are able to connect on the server. when you open your Ubuntu server, the username is 'ubuntu'  
 then you nee to do a `sudo apt update && upgrade` you can also, if you want, install neofetch `apt get install neofetch `
 
 Now you need to install Apache, MySQL, PHP and Git :
 apache : `sudo apt install apache2 `  
 MySQL :  
 `sudo apt install mysql-server`  
-`sudo mysql_secure_installation`
+`sudo mysql_secure_installation`  
 PHP : `sudo apt install php-fpm`  
 `sudo apt install php libapache2-mod-php php-mysql -y`  
 `sudo systemctl restart apache2`  
@@ -244,6 +247,11 @@ phpinfo();
 
 `sudo systemctl restart apache2`
 
+### To test if it work
+
+You can go in on your web browser and type your public IP address and the php file like this  
+http://84.235.232.142/index.php
+
 ### Wa also need to change and do some setting for the MySQL server
 
 First we need to connect with MySQL
@@ -267,7 +275,8 @@ For that part we will just copy the default conf files and add our setting :
 `sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/pharmasys.conf `  
 Now you need to go in our .conf files (with `sudo nano`) and add this setting :
 
-`` <VirtualHost \*:80>
+``
+<VirtualHost \*:80>
 
         ServerAdmin webmaster@localhost
         ServerName pharmasys.store
@@ -294,4 +303,30 @@ sudo systemctl restart apache2`
 
 ### Environment Variable
 
-Here we will need to declare our variable in our Ubuntu server
+Here we will need to declare our variable in our Ubuntu server first and after that we will put them in our code.  
+ It will change the 5 variable : $host / $db / $user / $pass /$charset
+
+In ubuntu you will need to create a files '.conf' in this location : /etc/apache2/conf-available  
+And need to add this setting :
+
+`SetEnv DB_NAME_SERVER "pharmasys_db"`  
+`SetEnv DB_USERNAME_SERVER "admin"`  
+`SetEnv DB_PASSWORD_SERVER "admin"`  
+`SetEnv DB_CHARSET "utf8mb4"d`
+
+When it is done, we need to go in our code we nee to replace them :  
+'login.php'  
+'signUp.php'  
+'accueil.php'  
+'gestionproduits.php'  
+and replace everything in our variable like this :
+
+```php
+$host = "localhost";
+$db =  "pharmasys_db";
+$user =  getenv('DB_USERNAME_SERVER') ? getenv('DB_USERNAME_SERVER') :"root";
+$pass = getenv('DB_PASSWORD_SERVER') ? getenv('DB_PASSWORD_SERVER') : "";
+$charset =  getenv('DB_CHARSET_SERVER') ? getenv('DB_CHARSET') : "utf8mb4";
+```
+
+We are using a Ternary expression to swtich between our local Database on PHPMyAdmin and the Database on the server.
