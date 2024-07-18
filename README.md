@@ -330,3 +330,7 @@ $charset =  getenv('DB_CHARSET_SERVER') ? getenv('DB_CHARSET') : "utf8mb4";
 ```
 
 We are using a Ternary expression to swtich between our local Database on PHPMyAdmin and the Database on the server.
+
+### Schema of the localhost and OCI
+
+![](./src/assets/schema.png)
