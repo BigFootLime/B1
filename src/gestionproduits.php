@@ -51,25 +51,72 @@ try {
     }
 
     if (isset($_POST['add'])) {
-        $_id = $_POST['null'];
-        $name = $_POST['add_name'];
-        $description = $_POST['add_description'];
-        $price = $_POST['add_price'];
-        $expire_date = $_POST['add_expire_date'];
-        $form = $_POST['add_form'];
-        $manufacturer = $_POST['add_manufacturer'];
-        $quantity = $_POST['add_quantity'];
-        $sold = $_POST['add_sold'];
-        $img_path = $_POST['add_img_path'];
+        $errors = array();
     
-        $sql = "INSERT INTO medicaments (_id ,name, description, price, expire_date, form, manufacturer, quantity, sold, img_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $pdo->prepare($sql);
-        if ($stmt->execute([$_id, $name, $description, $price, $expire_date, $form, $manufacturer, $quantity, $sold, $img_path])) {
-            echo "<script>alert('Product added successfully');</script>";
-            echo "<script>window.location.href = window.location.href;</script>";
-            exit;
+        if (empty($_POST['add_name'])) {
+            $errors['add_name'] = 'Name is required.';
         } else {
-            echo "<script>alert('Error adding product');</script>";
+            $name = $_POST['add_name'];
+        }
+    
+        if (empty($_POST['add_description'])) {
+            $errors['add_description'] = 'Description is required.';
+        } else {
+            $description = $_POST['add_description'];
+        }
+    
+        if (empty($_POST['add_price'])) {
+            $errors['add_price'] = 'Price is required.';
+        } else {
+            $price = $_POST['add_price'];
+        }
+    
+        if (empty($_POST['add_expire_date'])) {
+            $errors['add_expire_date'] = 'Expire date is required.';
+        } else {
+            $expire_date = $_POST['add_expire_date'];
+        }
+    
+        if (empty($_POST['add_form'])) {
+            $errors['add_form'] = 'Form is required.';
+        } else {
+            $form = $_POST['add_form'];
+        }
+    
+        if (empty($_POST['add_manufacturer'])) {
+            $errors['add_manufacturer'] = 'Manufacturer is required.';
+        } else {
+            $manufacturer = $_POST['add_manufacturer'];
+        }
+    
+        if (empty($_POST['add_quantity'])) {
+            $errors['add_quantity'] = 'Quantity is required.';
+        } else {
+            $quantity = $_POST['add_quantity'];
+        }
+    
+        if (empty($_POST['add_sold'])) {
+            $errors['add_sold'] = 'Sold is required.';
+        } else {
+            $sold = $_POST['add_sold'];
+        }
+    
+        if (empty($_POST['add_img_path'])) {
+            $errors['add_img_path'] = 'Image path is required.';
+        } else {
+            $img_path = $_POST['add_img_path'];
+        }
+    
+        if (empty($errors)) {
+            $sql = "INSERT INTO medicaments (name, description, price, expire_date, form, manufacturer, quantity, sold, img_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $pdo->prepare($sql);
+            if ($stmt->execute([$name, $description, $price, $expire_date, $form, $manufacturer, $quantity, $sold, $img_path])) {
+                echo "<script>alert('Product added successfully');</script>";
+                echo "<script>window.location.href = window.location.href;</script>";
+                exit;
+            } else {
+                echo "<script>alert('Error adding product');</script>";
+            }
         }
     }
     
@@ -243,42 +290,69 @@ try {
 <!-------------------------------------------------------------------TABLE END ------------------------------------------------------------------------------------>
 <!-------------------------------------------------------------------ADD FORM------------------------------------------------------------------------------------>
 <div id="add-form-container" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-    <form method="post" action="" class="bg-white p-6 rounded-lg w-full md:w-[50%]">
+    <form method="post" action="" class="bg-white p-6 rounded-lg w-full md:w-[50%] h-[90vh] overflow-scroll">
         <div class="mb-4">
             <label for="add_name" class="block text-gray-700">Name</label>
-            <input type="text" name="add_name" id="add_name" class="w-full p-2 border border-gray-300 rounded mt-1">
+            <input type="text" name="add_name" id="add_name" class="w-full p-2 border border-gray-300 rounded mt-1" value="<?= isset($name) ? htmlspecialchars($name) : '' ?>">
+            <?php if (isset($errors['add_name'])): ?>
+                <span class="text-red-500 text-[9px]"><?= htmlspecialchars($errors['add_name']) ?></span>
+            <?php endif; ?>
         </div>
         <div class="mb-4">
             <label for="add_description" class="block text-gray-700">Description</label>
-            <textarea name="add_description" id="add_description" class="w-full p-2 border border-gray-300 rounded mt-1"></textarea>
+            <textarea name="add_description" id="add_description" class="w-full p-2 border border-gray-300 rounded mt-1"><?= isset($description) ? htmlspecialchars($description) : '' ?></textarea>
+            <?php if (isset($errors['add_description'])): ?>
+                <span class="text-red-500 text-[9px]"><?= htmlspecialchars($errors['add_description']) ?></span>
+            <?php endif; ?>
         </div>
         <div class="mb-4">
             <label for="add_price" class="block text-gray-700">Price</label>
-            <input type="text" name="add_price" id="add_price" class="w-full p-2 border border-gray-300 rounded mt-1">
+            <input type="text" name="add_price" id="add_price" class="w-full p-2 border border-gray-300 rounded mt-1" value="<?= isset($price) ? htmlspecialchars($price) : '' ?>">
+            <?php if (isset($errors['add_price'])): ?>
+                <span class="text-red-500 text-[9px]"><?= htmlspecialchars($errors['add_price']) ?></span>
+            <?php endif; ?>
         </div>
         <div class="mb-4">
             <label for="add_expire_date" class="block text-gray-700">Expire Date</label>
-            <input type="date" name="add_expire_date" id="add_expire_date" class="w-full p-2 border border-gray-300 rounded mt-1">
+            <input type="date" name="add_expire_date" id="add_expire_date" class="w-full p-2 border border-gray-300 rounded mt-1" value="<?= isset($expire_date) ? htmlspecialchars($expire_date) : '' ?>">
+            <?php if (isset($errors['add_expire_date'])): ?>
+                <span class="text-red-500 text-[9px]"><?= htmlspecialchars($errors['add_expire_date']) ?></span>
+            <?php endif; ?>
         </div>
         <div class="mb-4">
             <label for="add_form" class="block text-gray-700">Form</label>
-            <input type="text" name="add_form" id="add_form" class="w-full p-2 border border-gray-300 rounded mt-1">
+            <input type="text" name="add_form" id="add_form" class="w-full p-2 border border-gray-300 rounded mt-1" value="<?= isset($form) ? htmlspecialchars($form) : '' ?>">
+            <?php if (isset($errors['add_form'])): ?>
+                <span class="text-red-500 text-[9px]"><?= htmlspecialchars($errors['add_form']) ?></span>
+            <?php endif; ?>
         </div>
         <div class="mb-4">
             <label for="add_manufacturer" class="block text-gray-700">Manufacturer</label>
-            <input type="text" name="add_manufacturer" id="add_manufacturer" class="w-full p-2 border border-gray-300 rounded mt-1">
+            <input type="text" name="add_manufacturer" id="add_manufacturer" class="w-full p-2 border border-gray-300 rounded mt-1" value="<?= isset($manufacturer) ? htmlspecialchars($manufacturer) : '' ?>">
+            <?php if (isset($errors['add_manufacturer'])): ?>
+                <span class="text-red-500 text-[9px]"><?= htmlspecialchars($errors['add_manufacturer']) ?></span>
+            <?php endif; ?>
         </div>
         <div class="mb-4">
             <label for="add_quantity" class="block text-gray-700">Quantity</label>
-            <input type="text" name="add_quantity" id="add_quantity" class="w-full p-2 border border-gray-300 rounded mt-1">
+            <input type="text" name="add_quantity" id="add_quantity" class="w-full p-2 border border-gray-300 rounded mt-1" value="<?= isset($quantity) ? htmlspecialchars($quantity) : '' ?>">
+            <?php if (isset($errors['add_quantity'])): ?>
+                <span class="text-red-500 text-[9px]"><?= htmlspecialchars($errors['add_quantity']) ?></span>
+            <?php endif; ?>
         </div>
         <div class="mb-4">
             <label for="add_sold" class="block text-gray-700">Sold</label>
-            <input type="text" name="add_sold" id="add_sold" class="w-full p-2 border border-gray-300 rounded mt-1">
+            <input type="text" name="add_sold" id="add_sold" class="w-full p-2 border border-gray-300 rounded mt-1" value="<?= isset($sold) ? htmlspecialchars($sold) : '' ?>">
+            <?php if (isset($errors['add_sold'])): ?>
+                <span class="text-red-500 text-[9px]"><?= htmlspecialchars($errors['add_sold']) ?></span>
+            <?php endif; ?>
         </div>
         <div class="mb-4">
             <label for="add_img_path" class="block text-gray-700">Image Path</label>
-            <input type="text" name="add_img_path" id="add_img_path" class="w-full p-2 border border-gray-300 rounded mt-1">
+            <input type="text" name="add_img_path" id="add_img_path" class="w-full p-2 border border-gray-300 rounded mt-1" value="<?= isset($img_path) ? htmlspecialchars($img_path) : '' ?>">
+            <?php if (isset($errors['add_img_path'])): ?>
+                <span class="text-red-500 text-[9px]"><?= htmlspecialchars($errors['add_img_path']) ?></span>
+            <?php endif; ?>
         </div>
         <button type="submit" name="add" class="bg-blue-500 text-white p-2 rounded">Add Product</button>
         <button type="button" class="bg-gray-500 text-white p-2 rounded" onclick="hideAddForm()">Cancel</button>
